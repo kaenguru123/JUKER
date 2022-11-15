@@ -1,0 +1,70 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\LDK2FE\\source\\repos\\kaenguru123\\JUKER\\Juker\\Juker\\Juker.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\LDK2FE\\source\\repos\\kaenguru123\\JUKER\\Juker\\Juker\\Juker.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\LDK2FE\\source\\repos\\kaenguru123\\JUKER\\Juker\\Juker\\Juker.csproj",
+        "projectName": "Juker",
+        "projectPath": "C:\\Users\\LDK2FE\\source\\repos\\kaenguru123\\JUKER\\Juker\\Juker\\Juker.csproj",
+        "packagesPath": "C:\\Users\\LDK2FE\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LDK2FE\\source\\repos\\kaenguru123\\JUKER\\Juker\\Juker\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\LDK2FE\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0-windows"
+        ],
+        "sources": {
+          "http://atmo1tfsbuild2.de.bosch.com:8081/repository/nuget-group/": {},
+          "https://artifactory.boschdevcloud.com/artifactory/api/nuget/lab000003-bci-nuget-virtual/": {}
+        },
+        "frameworks": {
+          "net6.0-windows7.0": {
+            "targetAlias": "net6.0-windows",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0-windows7.0": {
+          "targetAlias": "net6.0-windows",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
