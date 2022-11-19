@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Juker",
+    "\\Juker\\Juker"
   ],
-  "SelectedNode": "\\Juker.sln",
+  "SelectedNode": "\\Juker\\Juker\\MainWindow.xaml",
   "PreviewInSolutionExplorer": false
 }

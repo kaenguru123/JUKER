@@ -14,4 +14,26 @@
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\ButtonClassic.png" />
+    <None Remove="Images\Inhalt.png" />
+    <None Remove="Images\Willkommen.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\ButtonClassic.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Inhalt.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Willkommen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="MVVM\" />
+  </ItemGroup>
+
 </Project>

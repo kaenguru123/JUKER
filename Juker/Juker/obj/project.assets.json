@@ -8,35 +8,32 @@
     "net6.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Startklar\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\LDK2FE\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Startklar\\Documents\\Git_Repos\\JUKER\\Juker\\Juker\\Juker.csproj",
+      "projectUniqueName": "C:\\Users\\LDK2FE\\source\\repos\\kaenguru123\\JUKER\\Juker\\Juker\\Juker.csproj",
       "projectName": "Juker",
-      "projectPath": "C:\\Users\\Startklar\\Documents\\Git_Repos\\JUKER\\Juker\\Juker\\Juker.csproj",
-      "packagesPath": "C:\\Users\\Startklar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Startklar\\Documents\\Git_Repos\\JUKER\\Juker\\Juker\\obj\\",
+      "projectPath": "C:\\Users\\LDK2FE\\source\\repos\\kaenguru123\\JUKER\\Juker\\Juker\\Juker.csproj",
+      "packagesPath": "C:\\Users\\LDK2FE\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\LDK2FE\\source\\repos\\kaenguru123\\JUKER\\Juker\\Juker\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Startklar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\LDK2FE\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net6.0-windows7.0"
+        "net6.0-windows"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "http://atmo1tfsbuild2.de.bosch.com:8081/repository/nuget-group/": {},
+        "https://artifactory.boschdevcloud.com/artifactory/api/nuget/lab000003-bci-nuget-virtual/": {}
       },
       "frameworks": {
         "net6.0-windows7.0": {
@@ -59,12 +56,29 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          },
+          "Microsoft.WindowsDesktop.App.WPF": {
+            "privateAssets": "none"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1803",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "You are running the 'restore' operation with an 'HTTP' source, 'http://atmo1tfsbuild2.de.bosch.com:8081/repository/nuget-group/'. Non-HTTPS access will be removed in a future version. Consider migrating to an 'HTTPS' source."
+    }
+  ]
 }
