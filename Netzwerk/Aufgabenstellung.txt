@@ -1,0 +1,25 @@
+Projektmanagement:
+	- Vorstellen können, wie der Stand der Dinge ist
+	- Zeigen können, dass man Fortschritte macht
+	- Kanban Board reicht aus (Projektmanagement)
+		* Kann auch ausgeweitet werden
+	- Agile Methoden haben Limits (max. 5 bspw.)
+	- Separate Prüfung (Mündlich am Ende oder auch als Klassenarbeit zum eigenen Projekt in schriftlicher Form)
+
+Gruppen
+	- Größe von bis zu vier Personen
+
+Projektinhalt
+	Messe
+		- Stand (Bezogen auf den BWL Teil)
+		- Laufkundschaft
+		- Premiumangebote (Bei Registration)
+			* FIAE: Einbindung einer Webcam (Premium Karte gleich mit Bild des Kunden)
+			* FISI: Einfache Software
+		- Eigene Infrastruktur
+			* FISI: VPN in Netzwerk konfigurieren
+			* FIAE: Implementieren einer einfachen Rest API (Eigenständiger Teil, der Daten entgegen nimmt)
+
+	BWL-Inhalt
+		- Logistik
+		- Wann ist etwas wirklich zugestellt?
