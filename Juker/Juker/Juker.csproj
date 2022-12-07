@@ -34,6 +34,8 @@
 
   <ItemGroup>
     <Folder Include="MVVM\" />
+    <Folder Include="ViewModel\" />
+    <Folder Include="View\" />
   </ItemGroup>
 
 </Project>

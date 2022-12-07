@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Juker.Model;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -16,7 +17,9 @@ namespace Juker
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
+            //Datenbankabfrage
+            ProductList.Initialize();
+            ProductList.Products
 
         }
     }

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Juker
 {
   /// <summary>
-  /// Interaction logic for Anmeldung.xaml
+  /// Interaction logic for Registration.xaml
   /// </summary>
-  public partial class Anmeldung : Page
+  public partial class Registration : Page
   {
-    public Anmeldung()
+    public Registration()
     {
       InitializeComponent();
     }

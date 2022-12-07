@@ -7,12 +7,12 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Anmeldung.xaml.cs">
+    <Compile Update="Registration.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Anmeldung.xaml">
+    <Page Update="Registration.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Juker.xaml">
