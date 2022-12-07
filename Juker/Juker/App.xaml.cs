@@ -20,7 +20,8 @@ namespace Juker
             base.OnStartup(e);
             //Datenbankabfrage
             ProductList.Initialize();
-            JsonConvert
+            
+            Customer customer = new Customer();
 
         }
     }
