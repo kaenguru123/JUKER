@@ -7,9 +7,9 @@ using System.Windows;
 
 namespace Juker.Model
 {
-    public class ProductList
+    public class Product
     {
-        private ProductList() { }
+        private Product() { }
         public static void Initialize()
         {
             // Products = new List<Product>(//Datenbankabfrage);
@@ -17,6 +17,6 @@ namespace Juker.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
-        public static List<ProductList> Products { get; private set; }
+        
     }
 }

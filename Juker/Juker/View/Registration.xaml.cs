@@ -13,16 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Juker
+namespace Juker.View
 {
-  /// <summary>
-  /// Interaction logic for Registration.xaml
-  /// </summary>
-  public partial class Registration : Page
-  {
-    public Registration()
+    /// <summary>
+    /// Interaktionslogik für Registration.xaml
+    /// </summary>
+    public partial class Registration : UserControl
     {
-      InitializeComponent();
+        public Registration()
+        {
+            InitializeComponent();
+        }
     }
-  }
 }
