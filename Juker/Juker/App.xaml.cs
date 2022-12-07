@@ -1,4 +1,5 @@
 ﻿using Juker.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -19,7 +20,7 @@ namespace Juker
             base.OnStartup(e);
             //Datenbankabfrage
             ProductList.Initialize();
-            ProductList.Products
+            JsonConvert
 
         }
     }
