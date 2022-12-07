@@ -7,15 +7,21 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Registration.xaml.cs">
+    <Compile Update="View\Registration.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\ThankYou.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Registration.xaml">
+    <Page Update="Juker.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Juker.xaml">
+    <Page Update="View\Registration.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\ThankYou.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

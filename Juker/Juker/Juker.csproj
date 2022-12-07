@@ -33,12 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MVVM\" />
-    <Folder Include="ViewModel\" />
-    <Folder Include="View\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 
