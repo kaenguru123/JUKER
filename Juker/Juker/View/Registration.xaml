@@ -3,10 +3,81 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Juker.View"
+             xmlns:local="clr-namespace:Juker.View" xmlns:viewmodel="clr-namespace:Juker.ViewModel" 
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="White">
     <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" FontSize="23" HorizontalAlignment="Center"  Text="Registration"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" >
+            <CheckBox Content="Company Customer" />
+            <CheckBox Content="Private Customer" />
+        </StackPanel>
+        
+        
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="First Name"/>
+            <TextBox Grid.Row="1" Grid.Column="0" Text="Binding FirstName Hinzufügen" />
             
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Last Name"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="Binding LastName Hinzufügen" />
+        </Grid>
+        
+        <Grid Grid.Row="3" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Phone Number"/>
+            <TextBox Grid.Row="1" Grid.Column="0" Text="Binding PhoneNumber Hinzufügen" />
+
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Email"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="Binding Email Hinzufügen" />
+        </Grid>
+
+        <Grid Grid.Row="4" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Company"/>
+            <TextBox Grid.Row="1" Grid.Column="0" Text="Binding Company Hinzufügen" />
+
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Last Name"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="Binding LastName Hinzufügen" />
+        </Grid>
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" >
+            <Button Content="Submit"></Button>
+            <Button Content="Cancel"></Button>
+        </StackPanel>
+
     </Grid>
 </UserControl>
