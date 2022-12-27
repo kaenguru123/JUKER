@@ -21,8 +21,6 @@ namespace Juker
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            //Datenbankabfrage
-            Product.Initialize();
 
             Customer customer = new Customer();
             try

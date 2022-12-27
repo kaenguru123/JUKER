@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Juker_Employer.Model;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Juker_Employer
 {
@@ -13,5 +15,10 @@ namespace Juker_Employer
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            //Datenbankabfrage
+            var DbConext = new JukerDbContext();
+        }
     }
 }
