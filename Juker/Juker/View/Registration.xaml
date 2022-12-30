@@ -75,7 +75,7 @@
         </Grid>
 
         <StackPanel Grid.Row="5" Orientation="Horizontal" >
-            <Button Content="Submit"></Button>
+            <Button Content="Submit" Click="Button_Click"></Button>
             <Button Content="Cancel"></Button>
         </StackPanel>
 
