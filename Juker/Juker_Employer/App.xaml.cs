@@ -1,4 +1,5 @@
-﻿using Juker_Employer.Model;
+﻿using Juker.Model;
+using Juker_Employer.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -18,7 +19,20 @@ namespace Juker_Employer
         protected override void OnStartup(StartupEventArgs e)
         {
             //Datenbankabfrage
-            var DbConext = new JukerDbContext();
+            var connector = new DbConnector();
+
+            List<Customer> customerList = connector.getCustomerNameList();
+
+            foreach (Customer customer in customerList)
+            {
+                Console.WriteLine(customer.FirstName + " " + customer.LastName + " " + customer.Id);
+            }
+
+            Customer test = connector.getCustomerById(1);
+            List<Product> testInterests = connector.getCustomerInterestsById(test.Id);
+            test.ProductIntrests= testInterests;
+
+            Console.WriteLine(test);
         }
     }
 }
