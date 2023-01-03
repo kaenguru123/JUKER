@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ using System.Windows.Markup;
 using Juker.Model;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Org.BouncyCastle.Utilities.Collections;
 
 namespace Juker_Employer.Model
 {
@@ -183,6 +186,73 @@ namespace Juker_Employer.Model
             List<Customer> resultNames = getCustomerList(data);
             data.Close();
             return resultNames;
+        }
+
+        private int saveCompanyToDatabase(Company companyToSave)
+        {
+            string companyQuery = "INSERT INTO " +
+                                    "`company` " +
+                                    "(`company_id`, `name`, `street`, `house_number`, `city`, `country`) " +
+                                    $"VALUES (NULL, '{companyToSave.Name}', '{companyToSave.Street}', '{companyToSave.HouseNumber}', '{companyToSave.City}', '{companyToSave.Country}')";
+            Command.CommandText = companyQuery;
+            var res = Command.ExecuteNonQuery();
+
+            string lastIdQuery = "SELECT LAST_INSERT_ID() as Id;";
+            Command.CommandText = lastIdQuery;
+            var data = Command.ExecuteReader();
+            data.Read();
+            int id = Int32.Parse(data["Id"].ToString());
+            data.Close();
+            return id;
+        }
+        private int saveCustomerToDatabase(Customer customerToSave)
+        {
+            int? companyId = null;
+            if (customerToSave.Company != null)
+            {
+                companyId = saveCompanyToDatabase(customerToSave.Company);
+            }
+            string query = "INSERT INTO " +
+                            "`customer` " +
+                            "(`customer_id`, `first_name`, `last_name`, `phone_number`, `email`, `photo_url`, `company`) " +
+                            $"VALUES(NULL, '{customerToSave.FirstName}', '{customerToSave.LastName}', '{customerToSave.PhoneNumber}', '{customerToSave.Email}', '{customerToSave.PictureUrl}', {companyId});";
+            
+                            
+            Command.CommandText = query;
+            return Command.ExecuteNonQuery();
+        }
+
+        public bool saveJsonToDatabase(string path)
+        {
+            var jsonData = File.ReadAllText(path);
+            try
+            {
+                var newCustomers = JsonConvert.DeserializeAnonymousType(jsonData, new List<Customer>());
+                foreach (Customer customer in newCustomers)
+                {
+                    saveCustomerToDatabase(customer);
+                }
+            }
+            catch 
+            {
+                var newCustomer = JsonConvert.DeserializeAnonymousType(jsonData, new Customer());
+                saveCustomerToDatabase(newCustomer);
+            }
+            return true;
+        }
+
+        public bool insertCustomer(string path, Customer newCustomer)
+        {
+            try 
+            {
+                var initialJson = File.ReadAllText(path);
+                var jsonToOutput = JsonConvert.SerializeObject(newCustomer, Formatting.Indented);
+
+                return true;
+            }
+            catch {
+                return false;
+            }
         }
     }
 }

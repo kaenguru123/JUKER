@@ -32,6 +32,11 @@ namespace Juker_Employer
             List<Product> testInterests = connector.getCustomerInterestsById(test.Id);
             test.ProductIntrests= testInterests;
 
+            string path = "C:\\Users\\Startklar\\Documents\\Git_Repos\\JUKER\\customer_data.json";
+
+            connector.insertCustomer(path, test);
+            //connector.saveJsonToDatabase(path);
+
             Console.WriteLine(test);
         }
     }

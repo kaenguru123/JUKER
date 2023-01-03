@@ -24,7 +24,7 @@ namespace Juker.View
     /// </summary>
     public partial class Registration : UserControl
     {
-        string path = "A:/Downloads/customer_data.json"; //individuell anpassen
+        string path = "C:\\Users\\Startklar\\Documents\\Git_Repos\\JUKER\\customer_data.json"; //individuell anpassen
         public Registration()
         {
             InitializeComponent();
@@ -32,7 +32,7 @@ namespace Juker.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(path)
+            if (File.Exists(path))
             {
                 InsertData(path);
             }
