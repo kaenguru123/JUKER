@@ -16,13 +16,14 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" FontSize="23" HorizontalAlignment="Center"  Text="Registration"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" >
-            <CheckBox Content="Company Customer" />
-            <CheckBox Content="Private Customer" />
+            <CheckBox Content="Company Customer"  Checked="CheckBox_Checked" Unchecked="CheckBox_UnChecked" Name="CompanyCheckBox"/>
+            <CheckBox Content="Private Customer" Name="PrivateCheckBox" />
         </StackPanel>
         
         
@@ -36,10 +37,10 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="First Name"/>
-            <TextBox Grid.Row="1" Grid.Column="0" Text="Binding FirstName Hinzufügen" />
+            <TextBox Grid.Row="1" Grid.Column="0" Name ="FirstName" />
             
             <TextBlock Grid.Row="0" Grid.Column="1" Text="Last Name"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="Binding LastName Hinzufügen" />
+            <TextBox Grid.Row="1" Grid.Column="1" Name="LastName"/>
         </Grid>
         
         <Grid Grid.Row="3" >
@@ -52,14 +53,19 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Phone Number"/>
-            <TextBox Grid.Row="1" Grid.Column="0" Text="Binding PhoneNumber Hinzufügen" />
+            <TextBox Grid.Row="1" Grid.Column="0" Name="PhoneNumber"/>
 
             <TextBlock Grid.Row="0" Grid.Column="1" Text="Email"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="Binding Email Hinzufügen" />
+            <TextBox Grid.Row="1" Grid.Column="1" Name="Email"/>
         </Grid>
 
-        <Grid Grid.Row="4" >
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Company" HorizontalAlignment="Center" Name="CompanyExtensionHead"/>
+        <Grid Grid.Row="5" Name="CompanyExtension">
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
@@ -67,14 +73,25 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Company"/>
-            <TextBox Grid.Row="1" Grid.Column="0" Text="Binding Company Hinzufügen" />
-
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="Last Name"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="Binding LastName Hinzufügen" />
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name"/>
+            <TextBox Grid.Row="1" Grid.Column="0" Name="CompanyName" />
+            
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Street"/>
+            <TextBox Grid.Row="3" Grid.Column="0" Name="CompanyStreet"/>
+            
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="House Number"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Name="CompanyHouseNumber"/>
+            
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="City"/>
+            <TextBox Grid.Row="5" Grid.Column="0" Name="CompanyCountry"/>
+            
+            <TextBlock Grid.Row="4" Grid.Column="1" Text="Country"/>
+            <TextBox Grid.Row="5" Grid.Column="1" Name="CompanyCity"/>
+            
+            
         </Grid>
 
-        <StackPanel Grid.Row="5" Orientation="Horizontal" >
+        <StackPanel Grid.Row="6" Orientation="Horizontal" >
             <Button Content="Submit" Click="Button_Click"></Button>
             <Button Content="Cancel"></Button>
         </StackPanel>

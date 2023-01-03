@@ -24,15 +24,18 @@ namespace Juker.View
     /// </summary>
     public partial class Registration : UserControl
     {
-        string path = "A:/Downloads/customer_data.json"; //individuell anpassen
+        string path = @"C:\Users\Kenrick\Downloads\messe.json"; //individuell anpassen
         public Registration()
         {
             InitializeComponent();
+            CompanyExtensionHead.Visibility = Visibility.Collapsed;
+            CompanyExtension.Visibility = Visibility.Collapsed;
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(path)
+            if (File.Exists(path))
             {
                 InsertData(path);
             }
@@ -40,26 +43,47 @@ namespace Juker.View
             {
                 File.Create(path).Close();
                 InsertData(path);
-                
+
             }
-            
-            
+
+
         }
         private void InsertData(string FilePath)
         {
-            Customer newCustomer = new Customer();
-            newCustomer.FirstName = "";
-            newCustomer.LastName = "";
-            newCustomer.PhoneNumber = "";
-            newCustomer.Email = "";
-            newCustomer.PictureUrl = "";
-            newCustomer.Company = null;
-            newCustomer.ProductIntrests = null;
+            Company company = new Company
+            {
+                Name = CompanyName.Text,
+                Street = CompanyStreet.Text,
+                HouseNumber = CompanyHouseNumber.Text,
+                City = CompanyCity.Text,
+                Country = CompanyCountry.Text,
+            };
+            Customer newCustomer = new Customer()
+            {
+                FirstName = FirstName.Text,
+                LastName = LastName.Text,
+                PhoneNumber = PhoneNumber.Text,
+                Email = Email.Text,
+                PictureUrl = "",
+                Company = company,
+                ProductIntrests = null
+            };
 
             var initialJson = File.ReadAllText(FilePath);
             var existingCustomer = JArray.Parse(initialJson);
             existingCustomer.Add(newCustomer);
             var jsonToOutput = JsonConvert.SerializeObject(existingCustomer, Formatting.Indented);
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            CompanyExtensionHead.Visibility = Visibility.Visible;
+            CompanyExtension.Visibility = Visibility.Visible;
+        }
+        private void CheckBox_UnChecked(object sender, RoutedEventArgs e)
+        {
+            CompanyExtension.Visibility = Visibility.Collapsed;
+            CompanyExtensionHead.Visibility = Visibility.Collapsed;
         }
     }
 }
