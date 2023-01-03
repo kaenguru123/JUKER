@@ -3,40 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Juker.ViewModel
 {
     internal class CompanyViewModel : ViewModelBase
     {
-        private string _firstName;
-        public string FirstName { 
+
+        public ICommand MakeCompanyRegistration { get; }
+
+        public CompanyViewModel()
+        {
+
+        }
+
+
+        private string _name;
+        public string Name { 
         
         get
             {
-                return _firstName;
+                return _name;
             }
             set
             {
-                _firstName = value;
-                OnPropertyChanged(nameof(FirstName));
+                _name = value;
+                OnPropertyChanged(nameof(Name));
             }
         }
 
-        private string _lastName;
-        public string LastName
-        {
-
-            get
-            {
-                return _lastName;
-            }
-            set
-            {
-                _lastName = value;
-                OnPropertyChanged(nameof(LastName));
-            }
-        }
-
+  
         private string _street;
         public string Street
         {
