@@ -6,6 +6,7 @@
 # J U K E R - Custom
 customer_data.json
 products.json
+product.json
 
 # User-specific files
 *.rsuser
