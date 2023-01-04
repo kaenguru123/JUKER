@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -176,33 +177,17 @@ namespace Juker_Employer.Model
         }
 
 
-        private int saveCompanyToDatabase(Company companyToSave)
+        private bool saveProductInterestToDatabase(int productId, int customerId)
         {
-            string companyQuery = "INSERT INTO " +
-                                    "`company` " +
-                                    "(`company_id`, `name`, `street`, `house_number`, `city`, `country`) " +
-                                    $"VALUES (NULL, '{companyToSave.Name}', '{companyToSave.Street}', '{companyToSave.HouseNumber}', '{companyToSave.City}', '{companyToSave.Country}')";
-            Command.CommandText = companyQuery;
-            var res = Command.ExecuteNonQuery();
-
-            string lastIdQuery = "SELECT LAST_INSERT_ID() as Id;";
-            Command.CommandText = lastIdQuery;
-            var data = Command.ExecuteReader();
-            data.Read();
-            int id = Int32.Parse(data["Id"].ToString());
-            data.Close();
-            return id;
+            string query = "INSERT INTO " +
+                            "`product_customer` " +
+                           "(`procu_id`, `sap_number`, `customer_id`) " +
+                           $"VALUES(NULL, '{productId}', '{customerId}')";
+            
+            Command.CommandText = query;
+            return Command.ExecuteNonQuery() > 0;
         }
-        private int trySaveCompanyToDatabaseIfNotExisting(Company companyToSave)
-        {
-            int companyIdIfAlreadyExisting = getExistingCompanyId(companyToSave);
-            if (companyIdIfAlreadyExisting != -1)
-            {
-                return companyIdIfAlreadyExisting;
-            }
 
-            return saveCompanyToDatabase(companyToSave);
-        }
         private bool saveCustomerToDatabase(Customer customerToSave)
         {
             int? companyId = null;
@@ -215,9 +200,36 @@ namespace Juker_Employer.Model
                             "(`customer_id`, `first_name`, `last_name`, `phone_number`, `email`, `photo_url`, `company`) " +
                             $"VALUES(NULL, '{customerToSave.FirstName}', '{customerToSave.LastName}', '{customerToSave.PhoneNumber}', '{customerToSave.Email}', '{customerToSave.PictureUrl}', {companyId});";
 
-
             Command.CommandText = query;
-            return Command.ExecuteNonQuery() > 0;
+            if (Command.ExecuteNonQuery() == 0) return false;
+            int customerId = getLastInsertedId();
+
+            foreach (Product product in customerToSave.ProductIntrests)
+            {
+                saveProductInterestToDatabase(product.Id, customerId);
+            }
+            return true;
+        }
+        private int saveCompanyToDatabase(Company companyToSave)
+        {
+            string companyQuery = "INSERT INTO " +
+                                    "`company` " +
+                                    "(`company_id`, `name`, `street`, `house_number`, `city`, `country`) " +
+                                    $"VALUES (NULL, '{companyToSave.Name}', '{companyToSave.Street}', '{companyToSave.HouseNumber}', '{companyToSave.City}', '{companyToSave.Country}')";
+            Command.CommandText = companyQuery;
+            var res = Command.ExecuteNonQuery();
+
+            return getLastInsertedId();
+        }
+        private int trySaveCompanyToDatabaseIfNotExisting(Company companyToSave)
+        {
+            int companyIdIfAlreadyExisting = getExistingCompanyId(companyToSave);
+            if (companyIdIfAlreadyExisting != -1)
+            {
+                return companyIdIfAlreadyExisting;
+            }
+
+            return saveCompanyToDatabase(companyToSave);
         }
         private List<Company> getCompanyList()
         {
@@ -306,6 +318,16 @@ namespace Juker_Employer.Model
             validProduct.Category = tryIndex(data, "category") ? data["category"].ToString() : default(string);
 
             return validProduct;
+        }
+        private int getLastInsertedId()
+        {
+            string lastIdQuery = "SELECT LAST_INSERT_ID() as Id;";
+            Command.CommandText = lastIdQuery;
+            var data = Command.ExecuteReader();
+            data.Read();
+            int id = Int32.Parse(data["Id"].ToString());
+            data.Close();
+            return id;
         }
         private static T deepCopy<T>(T originObject)
         {
