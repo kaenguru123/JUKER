@@ -27,7 +27,6 @@ namespace Juker
             {
                 using (StreamReader file = File.OpenText(@"C:\Workspace\JUKER\Juker\Juker\data\products.json"))
                 {
-
                     JsonSerializer serializer = new JsonSerializer();
                     Products = (List<Product>)serializer.Deserialize(file, typeof(List<Product>));
                 }

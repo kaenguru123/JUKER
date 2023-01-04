@@ -19,25 +19,37 @@ namespace Juker_Employer
         protected override void OnStartup(StartupEventArgs e)
         {
             //Datenbankabfrage
-            var connector = new DbConnector();
+            
+        }
 
-            List<Customer> customerList = connector.getCustomerNameList();
-
-            foreach (Customer customer in customerList)
+        private bool DebugDbConnector()
+        {
+            try
             {
-                Console.WriteLine(customer.FirstName + " " + customer.LastName + " " + customer.Id);
+                string path = "C:\\Users\\Startklar\\Documents\\Git_Repos\\JUKER\\customer_data.json";
+                var connector = new DbConnector();
+
+                List<Customer> customerList = connector.getCustomerNameList();
+
+                Customer test = connector.getCustomerById(1);
+
+                List<Product> testInterests = connector.getCustomerInterestsById(test.Id);
+                test.ProductIntrests = testInterests;
+
+
+                connector.saveJsonToDatabase(path);
+
+                
+
+               
+
+                return true;
             }
-
-            Customer test = connector.getCustomerById(1);
-            List<Product> testInterests = connector.getCustomerInterestsById(test.Id);
-            test.ProductIntrests= testInterests;
-
-            string path = "C:\\Users\\Startklar\\Documents\\Git_Repos\\JUKER\\customer_data.json";
-
-            connector.insertCustomer(path, test);
-            //connector.saveJsonToDatabase(path);
-
-            Console.WriteLine(test);
+            catch (Exception)
+            {
+                throw;
+                return false;
+            }
         }
     }
 }
