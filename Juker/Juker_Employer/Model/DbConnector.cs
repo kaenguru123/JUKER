@@ -166,7 +166,7 @@ namespace Juker_Employer.Model
                 data.Close();
 
                 var resultProductsInJson = JsonConvert.SerializeObject(resultProducts, Formatting.Indented);
-                //TODO: saveToLocalJsonFile
+                File.WriteAllText(path, resultProductsInJson);
 
                 return true;
             }
@@ -313,7 +313,6 @@ namespace Juker_Employer.Model
             var validProduct = new Product();
 
             validProduct.Id = tryIndex(data, "sap_id") ? Int32.Parse(data["sap_id"].ToString()) : default(int);
-            validProduct.Id = tryIndex(data, "sap_number") ? Int32.Parse(data["sap_number"].ToString()) : default(int);
             validProduct.Name = tryIndex(data, "name") ? data["name"].ToString() : default(string);
             validProduct.Category = tryIndex(data, "category") ? data["category"].ToString() : default(string);
 
