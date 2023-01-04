@@ -151,7 +151,7 @@ namespace Juker_Employer.Model
                 string query = "SELECT " +
                                 "* " +
                                 "FROM " +
-                                "products;";
+                                "product;";
 
                 Command.CommandText = query;
                 var data = Command.ExecuteReader();

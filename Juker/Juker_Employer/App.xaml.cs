@@ -19,6 +19,8 @@ namespace Juker_Employer
         protected override void OnStartup(StartupEventArgs e)
         {
             //Datenbankabfrage
+
+            DebugDbConnector();
             
         }
 
@@ -26,7 +28,9 @@ namespace Juker_Employer
         {
             try
             {
-                string path = "C:\\Users\\Startklar\\Documents\\Git_Repos\\JUKER\\customer_data.json";
+                string pathCustomer = "C:\\Users\\Startklar\\Documents\\Git_Repos\\JUKER\\customer_data.json";
+                string pathProduct = "C:\\Users\\Startklar\\Documents\\Git_Repos\\JUKER\\product.json";
+
                 var connector = new DbConnector();
 
                 List<Customer> customerList = connector.getCustomerNameList();
@@ -37,11 +41,9 @@ namespace Juker_Employer
                 test.ProductIntrests = testInterests;
 
 
-                connector.saveJsonToDatabase(path);
+                connector.saveJsonToDatabase(pathCustomer);
 
-                
-
-               
+                connector.updateProductJson(pathProduct);
 
                 return true;
             }
