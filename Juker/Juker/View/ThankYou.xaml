@@ -5,8 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Juker.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="1080" d:DesignWidth="1920">
     <Grid>
-            
+       <Grid.Background>
+            <ImageBrush ImageSource="../images/Inhalt.png"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" VerticalAlignment="Bottom">
+            <TextBlock FontWeight="Bold" Text="Thank you!" FontSize="70"  HorizontalAlignment="Center" Margin="0 0 0 10"/>
+            <TextBlock FontSize="40"  Text="Your Registration is complete. You will receive your customer-card shortly." TextWrapping="Wrap" HorizontalAlignment="Center"
+                       Margin="40 20 40 20"/>
+
+            <Button HorizontalAlignment="Center">
+                <TextBlock Text="Ok" FontSize="15"/>
+            </Button>
+
+        </StackPanel>
     </Grid>
 </UserControl>

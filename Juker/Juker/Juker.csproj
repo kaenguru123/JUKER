@@ -16,7 +16,9 @@
 
   <ItemGroup>
     <None Remove="Images\ButtonClassic.png" />
+    <None Remove="Images\Formular.png" />
     <None Remove="Images\Inhalt.png" />
+    <None Remove="Images\Vector.png" />
     <None Remove="Images\Willkommen.png" />
   </ItemGroup>
 
@@ -24,7 +26,13 @@
     <Content Include="Images\ButtonClassic.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Formular.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Inhalt.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Vector.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Willkommen.png">

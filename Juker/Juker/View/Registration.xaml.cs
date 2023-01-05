@@ -24,13 +24,29 @@ namespace Juker.View
     /// </summary>
     public partial class Registration : UserControl
     {
-        string path = @"C:\Users\Kenrick\Downloads\messe.json"; //individuell anpassen
+     string path = @"C:\Users\Kenrick\Downloads\messe.json"; //individuell anpassen
+        private readonly List<Product> productList;
         public Registration()
         {
             InitializeComponent();
             CompanyExtensionHead.Visibility = Visibility.Collapsed;
             CompanyExtension.Visibility = Visibility.Collapsed;
 
+            productList = new List<Product>();
+            productList.Add(new Product()
+            {
+                Id = 0,
+                Name = "Bohrer",
+                Category = "Maschin"
+            });
+            productList.Add(new Product()
+            {
+                Id = 1,
+                Name = "Wasch",
+                Category = "Maschin"
+            });
+
+            ProductListView.ItemsSource = productList;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

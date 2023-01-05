@@ -1,5 +1,4 @@
-﻿using Juker.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Juker
+namespace Juker.View
 {
-  /// <summary>
-  /// Interaction logic for MainWindow.xaml
-  /// </summary>
-  public partial class Juker : Window
-  {
-    public Juker()
+    /// <summary>
+    /// Interaktionslogik für WelcomePage.xaml
+    /// </summary>
+    public partial class WelcomePage : UserControl
     {
-      InitializeComponent();
+        public WelcomePage()
+        {
+            InitializeComponent();
+        }
     }
-
-   }
 }
