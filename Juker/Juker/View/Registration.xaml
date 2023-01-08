@@ -23,8 +23,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-      <TextBlock Grid.Row="0" FontSize="60" HorizontalAlignment="Center"  Text="Registration" Margin="0 20 0 20" Grid.ColumnSpan="2"/>
-      
+        <TextBlock Grid.Row="0" FontSize="60" HorizontalAlignment="Center"  Text="Registration" Margin="0 20 0 20" Grid.ColumnSpan="2"/>
+
         <Grid Grid.Row="1" Grid.Column="0">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Button Style="{DynamicResource ImageButton}" Margin="0 0 0 10"/>
@@ -32,32 +32,47 @@
                 <TextBlock Text="Click the symbol to take a picture!" />
             </StackPanel>
         </Grid>
-        
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="0">
+
+        <Grid HorizontalAlignment="Center" Grid.Row="2" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <TextBlock Text="Our Products" FontSize="60" Margin="0 0 0 20" />
-            <ListView Name="ProductListView">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <WrapPanel>
-                                        <CheckBox IsChecked="false" Margin="0 0 0 10">
-                                            <CheckBox.RenderTransform>
-                                                <ScaleTransform ScaleX="1.8" ScaleY="1.8"/>
-                                            </CheckBox.RenderTransform>
-                                        </CheckBox>
-                                    </WrapPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
-                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                        <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </StackPanel>
+                <ListView Name="ProductListView" Grid.Row="1">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Style.Triggers>
+                                <Trigger Property="Control.IsMouseOver" Value="True">
+                                    <Setter Property="Control.Background" Value="Transparent" />
+                                </Trigger>
+                            </Style.Triggers>
+                            <Setter Property="Focusable" Value="False"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <WrapPanel>
+                                            <CheckBox Checked="ProductCheckBoxChecked" Unchecked="ProductCheckBoxUnchecked"  Margin="0 0 0 10">
+                                                <CheckBox.RenderTransform>
+                                                    <ScaleTransform ScaleX="1.8" ScaleY="1.8"/>
+                                                </CheckBox.RenderTransform>
+                                            </CheckBox>
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
+                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+        </Grid>
 
         <Grid Grid.IsSharedSizeScope="True" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
             <Grid.RowDefinitions>
@@ -72,15 +87,15 @@
 
 
             <StackPanel Grid.Row="4" Orientation="Horizontal" Margin =" -235 10 0 0 " HorizontalAlignment="Center">
-                <CheckBox Checked="CheckBox_Checked" 
-                      Unchecked="CheckBox_UnChecked" x:Name="CompanyCheckBox" 
+                <CheckBox Checked="CompanyCheckBoxChecked" 
+                      Unchecked="CompanyCheckBoxUnchecked" x:Name="CompanyCheckBox" 
                       IsChecked="False" Margin="0 0 20 0">
                     <CheckBox.RenderTransform>
                         <ScaleTransform ScaleX="1.8" ScaleY="1.8"/>
                     </CheckBox.RenderTransform>
                 </CheckBox>
                 <TextBlock  Text="Company Customer"/>
-                          </StackPanel>
+            </StackPanel>
 
 
             <Grid Grid.Row="2" Margin="0 0 0 5" HorizontalAlignment="Center">
@@ -116,8 +131,8 @@
             </Grid>
 
             <TextBlock Grid.Row="4" Grid.Column="0" Text="Company" FontSize="50" HorizontalAlignment="Center" Name="CompanyExtensionHead" Margin="0 45 0 20"/>
-            
-            
+
+
             <Grid Grid.Row="5" Name="CompanyExtension" HorizontalAlignment="Center" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -151,10 +166,10 @@
             </Grid>
 
             <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Click="Button_Click" Margin ="5 30 10 0">
+                <Button Margin ="5 30 10 0" Command="{Binding NavigateToThankYouPageCommand}">
                     <TextBlock FontSize="15" Text="Submit"/>
                 </Button>
-                <Button  Margin ="5  30 5 0 ">
+                <Button  Margin ="5  30 5 0 " Command="{Binding NavigateToWelcomePageCommand}">
                     <TextBlock FontSize="15" Text="Cancel"/>
                 </Button>
             </StackPanel>

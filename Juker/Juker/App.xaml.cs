@@ -1,4 +1,5 @@
 ﻿using Juker.Model;
+using Juker.ViewModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,24 +18,15 @@ namespace Juker
     /// </summary>
     public partial class App : Application
     {
-        static List<Product> Products = new List<Product>();
         protected override void OnStartup(StartupEventArgs e)
         {
+
+            MainWindow = new Juker();
+            MainWindow.Show();
+
             base.OnStartup(e);
 
-            Customer customer = new Customer();
-            try
-            {
-                using (StreamReader file = File.OpenText(@"C:\Workspace\JUKER\Juker\Juker\data\products.json"))
-                {
-                    JsonSerializer serializer = new JsonSerializer();
-                    Products = (List<Product>)serializer.Deserialize(file, typeof(List<Product>));
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+
         }
     }
 }

@@ -20,9 +20,9 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" Orientation="Vertical" Margin="0 0 100 0">
             <TextBlock Text="Welcome at Juker!" FontSize="60"  FontWeight="Bold" HorizontalAlignment="Center"/>
-            <TextBlock FontSize="40" Text="Create your customer card now, to receive entrance to more interesting offers. " 
-                       HorizontalAlignment="Center" TextWrapping="Wrap" />
-            <Button HorizontalAlignment="Center">
+            <TextBlock FontSize="40" Text="Create your customer card now, to receive access to more interesting offers! " 
+                       HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0 0 0 10" />
+            <Button HorizontalAlignment="Center" Command="{Binding NavigateToRegistrationCommand}">
                 <TextBlock Text="Start!" FontSize="15"/>
             </Button>
         </StackPanel>

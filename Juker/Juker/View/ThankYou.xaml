@@ -24,7 +24,7 @@
             <TextBlock FontSize="40"  Text="Your Registration is complete. You will receive your customer-card shortly." TextWrapping="Wrap" HorizontalAlignment="Center"
                        Margin="40 20 40 20"/>
 
-            <Button HorizontalAlignment="Center">
+            <Button HorizontalAlignment="Center" Command="{Binding NavigateToWelcomePageCommand}">
                 <TextBlock Text="Ok" FontSize="15"/>
             </Button>
 

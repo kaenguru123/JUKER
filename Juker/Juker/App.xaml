@@ -50,6 +50,7 @@
             <Setter Property ="BorderBrush" Value="#FFEFD6"/>
             <Setter Property ="Margin" Value="-140 0 10 0"/>
             <Setter Property="FontSize" Value="20"/>
+            <Setter Property="MaxLength" Value="30" />
         </Style>
 
         <Style TargetType="TextBox" x:Key="RightSideBox">
@@ -64,6 +65,7 @@
             <Setter Property ="BorderBrush" Value="#FFEFD6"/>
             <Setter Property ="Margin" Value=" 0 0 -140 0"/>
             <Setter Property="FontSize" Value="20"/>
+            <Setter Property="MaxLength" Value="30" />
         </Style>
 
 
@@ -78,6 +80,7 @@
             <Setter Property="Height" Value="30"/>
             <Setter Property ="BorderBrush" Value="#FFEFD6"/>
             <Setter Property="FontSize" Value="20"/>
+            <Setter Property="MaxLength" Value="30" />
         </Style>
 
         <Style TargetType="CheckBox">

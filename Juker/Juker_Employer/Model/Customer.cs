@@ -16,6 +16,6 @@ namespace Juker.Model
         public string Email { get; set; }
         public string PictureUrl { get; set; }
         virtual public Company Company { get; set; }
-        virtual public List<Product> ProductIntrests { get; set; }
+        virtual public List<Product> ProductInterests { get; set; }
     }
 }
