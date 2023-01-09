@@ -44,8 +44,8 @@ namespace Juker_Employer.Model
             }
             catch (MySqlException err)
             {
-                MessageBox.Show(err.Message, "ERROR! Connection to database failed!", 
-                                MessageBoxButton.OK, 
+                MessageBox.Show(err.Message, "ERROR! Connection to database failed!",
+                                MessageBoxButton.OK,
                                 MessageBoxImage.Error);
                 Environment.Exit(-1);
             }
@@ -80,6 +80,28 @@ namespace Juker_Employer.Model
 
             data.Close();
             return resultCustomer;
+        }
+
+        public List<Product> getProducts()
+        {
+            string query = "SELECT " +
+                            "product.sap_id, product.name, product.category " +
+                            "FROM " +
+                            "product;";
+
+            Command.CommandText = query;
+            var data = Command.ExecuteReader();
+
+            List<Product> resultProducts = new List<Product>();
+            while (data.Read())
+            {
+                resultProducts.Add(getValidProduct(data));
+            }
+
+            data.Close();
+
+            return resultProducts;
+
         }
         public List<Product> getCustomerInterestsById(int customerId)
         {
@@ -128,7 +150,7 @@ namespace Juker_Employer.Model
 
             return resultNames;
         }
-        
+
         public bool saveJsonToDatabase(string path)
         {
             var jsonData = File.ReadAllText(path);
@@ -148,7 +170,8 @@ namespace Juker_Employer.Model
         }
         public bool updateProductJson(string path)
         {
-            try { 
+            try
+            {
                 string query = "SELECT " +
                                 "* " +
                                 "FROM " +
@@ -170,9 +193,9 @@ namespace Juker_Employer.Model
 
                 return true;
             }
-            catch 
-            { 
-                return false; 
+            catch
+            {
+                return false;
             }
         }
 
@@ -183,7 +206,7 @@ namespace Juker_Employer.Model
                             "`product_customer` " +
                            "(`procu_id`, `sap_number`, `customer_id`) " +
                            $"VALUES(NULL, '{productId}', '{customerId}')";
-            
+
             Command.CommandText = query;
             return Command.ExecuteNonQuery() > 0;
         }
@@ -204,7 +227,7 @@ namespace Juker_Employer.Model
             if (Command.ExecuteNonQuery() == 0) return false;
             int customerId = getLastInsertedId();
 
-            foreach (Product product in customerToSave.ProductIntrests)
+            foreach (Product product in customerToSave.ProductInterests)
             {
                 saveProductInterestToDatabase(product.Id, customerId);
             }
@@ -266,7 +289,7 @@ namespace Juker_Employer.Model
         {
             if (data == null) { return false; }
             try
-            {        
+            {
                 var tryIndex = data[key];
                 return true;
             }

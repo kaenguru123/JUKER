@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2022 at 03:47 PM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 8.0.7
+-- Erstellungszeit: 05. Jan 2023 um 17:49
+-- Server-Version: 10.4.27-MariaDB
+-- PHP-Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `juker`
+-- Datenbank: `juker`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `company`
+-- Tabellenstruktur für Tabelle `company`
 --
 
 CREATE TABLE `company` (
@@ -34,12 +34,21 @@ CREATE TABLE `company` (
   `house_number` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
   `country` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Daten für Tabelle `company`
+--
+
+INSERT INTO `company` (`company_id`, `name`, `street`, `house_number`, `city`, `country`) VALUES
+(1, 'Robert Bosch GmbH', 'Borsigstrasse', '4', 'Feuerbach', 'Deutschland'),
+(3, 'SAP', 'sap-strasse', '1', 'Sap-stadt', 'Deutschland'),
+(4, 'Daimler AG', 'Daimlerstrasse', '1', 'Sindelfingen', 'Deutschland');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer`
+-- Tabellenstruktur für Tabelle `customer`
 --
 
 CREATE TABLE `customer` (
@@ -50,22 +59,30 @@ CREATE TABLE `customer` (
   `email` varchar(255) NOT NULL,
   `photo_url` varchar(255) DEFAULT NULL,
   `company` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Daten für Tabelle `customer`
+--
+
+INSERT INTO `customer` (`customer_id`, `first_name`, `last_name`, `phone_number`, `email`, `photo_url`, `company`) VALUES
+(1, 'Man', 'Fred', 111, 'man@fred.com', '12312312', 4),
+(2, 'Jürgen', 'Jürgensen', 123, 'Jürgen@jürgensen.com', 'sadasd', 3);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product`
+-- Tabellenstruktur für Tabelle `product`
 --
 
 CREATE TABLE `product` (
   `sap_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `category` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `product`
+-- Daten für Tabelle `product`
 --
 
 INSERT INTO `product` (`sap_id`, `name`, `category`) VALUES
@@ -77,40 +94,40 @@ INSERT INTO `product` (`sap_id`, `name`, `category`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_customer`
+-- Tabellenstruktur für Tabelle `product_customer`
 --
 
 CREATE TABLE `product_customer` (
   `procu_id` int(11) NOT NULL,
   `sap_number` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for dumped tables
+-- Indizes der exportierten Tabellen
 --
 
 --
--- Indexes for table `company`
+-- Indizes für die Tabelle `company`
 --
 ALTER TABLE `company`
   ADD PRIMARY KEY (`company_id`);
 
 --
--- Indexes for table `customer`
+-- Indizes für die Tabelle `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`customer_id`),
   ADD KEY `FK1` (`company`);
 
 --
--- Indexes for table `product`
+-- Indizes für die Tabelle `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`sap_id`);
 
 --
--- Indexes for table `product_customer`
+-- Indizes für die Tabelle `product_customer`
 --
 ALTER TABLE `product_customer`
   ADD PRIMARY KEY (`procu_id`),
@@ -118,45 +135,45 @@ ALTER TABLE `product_customer`
   ADD KEY `FK3` (`customer_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT für exportierte Tabellen
 --
 
 --
--- AUTO_INCREMENT for table `company`
+-- AUTO_INCREMENT für Tabelle `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `customer`
+-- AUTO_INCREMENT für Tabelle `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `product`
+-- AUTO_INCREMENT für Tabelle `product`
 --
 ALTER TABLE `product`
   MODIFY `sap_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `product_customer`
+-- AUTO_INCREMENT für Tabelle `product_customer`
 --
 ALTER TABLE `product_customer`
   MODIFY `procu_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
+-- Constraints der exportierten Tabellen
 --
 
 --
--- Constraints for table `customer`
+-- Constraints der Tabelle `customer`
 --
 ALTER TABLE `customer`
   ADD CONSTRAINT `FK1` FOREIGN KEY (`company`) REFERENCES `company` (`company_id`);
 
 --
--- Constraints for table `product_customer`
+-- Constraints der Tabelle `product_customer`
 --
 ALTER TABLE `product_customer`
   ADD CONSTRAINT `FK2` FOREIGN KEY (`sap_number`) REFERENCES `product` (`sap_id`),

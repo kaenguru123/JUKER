@@ -7,6 +7,49 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center">
+            <TextBlock FontSize="15" FontWeight="Bold" Text="Customers" HorizontalAlignment="Center" Margin="0 0 0 10"/>
+            <ListView Name="CustomerList" SelectionChanged="CustomerList_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding FirstName}"/>
+                        <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding LastName}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" >
+            <TextBlock FontSize="15" FontWeight="Bold" Text="Product Interests" HorizontalAlignment="Center" Margin="0 0 0 10"/>
+            <ListView Name="ProductList">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+
+        <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top"  HorizontalAlignment="Center">
+            <Button Click="SaveButton_Click" Height="20" Margin="0 0 5 0">
+                <TextBlock Text="Save Json" />
+            </Button>
+            <Button Click="UpdateButton_Click" Height="20" Margin="5 0 0 0">
+                <TextBlock Text="Update Products"/>
+            </Button>
+        </StackPanel>
+
 
     </Grid>
 </Window>

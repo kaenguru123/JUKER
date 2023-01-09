@@ -1,4 +1,6 @@
-﻿using Juker_Employer.Model;
+﻿using Juker.Model;
+
+using Juker_Employer.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -22,9 +24,42 @@ namespace Juker_Employer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DbConnector _dbConnector = new DbConnector();
+        private string pathBase = @"C:\Users\Kenrick\Downloads\"; //individuell anpassen
+
         public MainWindow()
         {
             InitializeComponent();
+
+            List<Customer> customers = _dbConnector.getCustomerNameList();
+
+            foreach (Customer customer in customers)
+            {
+                customer.ProductInterests = _dbConnector.getCustomerInterestsById(customer.Id);
+            }
+            CustomerList.ItemsSource = customers;
+
+            List<Product> productInterests = _dbConnector.getProducts();
+            ProductList.ItemsSource = productInterests;
+        }
+
+        private void CustomerList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CustomerList.SelectedItem != null)
+            {
+                Customer selectedCustomer = CustomerList.SelectedItem as Customer;
+                ProductList.ItemsSource = selectedCustomer.ProductInterests;
+            }
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            _dbConnector.saveJsonToDatabase(pathBase + "customer.json");
+        }
+
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            _dbConnector.updateProductJson(pathBase + "product.json");
         }
     }
 }

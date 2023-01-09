@@ -13,7 +13,7 @@
     <Compile Update="View\ThankYou.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Webcam_Window.xaml.cs">
+    <Compile Update="View\WelcomePage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -27,7 +27,7 @@
     <Page Update="View\ThankYou.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Webcam_Window.xaml">
+    <Page Update="View\WelcomePage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

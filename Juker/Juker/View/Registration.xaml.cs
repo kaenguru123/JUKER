@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,16 +25,45 @@ namespace Juker.View
     /// </summary>
     public partial class Registration : UserControl
     {
-        string path = @"C:\Users\Kenrick\Downloads\messe.json"; //individuell anpassen
+        private readonly string path = @"C:\Users\Kenrick\Downloads\messe.json"; //individuell anpassen
+
+        private List<Product> productList;
+        private bool isCompanyCustomer;
         public Registration()
         {
             InitializeComponent();
             CompanyExtensionHead.Visibility = Visibility.Collapsed;
             CompanyExtension.Visibility = Visibility.Collapsed;
 
+            productList = new List<Product>();
+            for (int i = 0; i < 15; i++)
+            {
+                productList.Add(new Product()
+                {
+                    Id = 0,
+                    Name = "Bohrer",
+                    Category = "Maschin"
+                });
+
+            }
+
+            productList.Add(new Product()
+            {
+                Id = 0,
+                Name = "Bohrer",
+                Category = "Maschin"
+            });
+            productList.Add(new Product()
+            {
+                Id = 1,
+                Name = "Wasch",
+                Category = "Maschin"
+            });
+
+            ProductListView.ItemsSource = productList;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SubmitButtonClick(object sender, RoutedEventArgs e)
         {
             if (File.Exists(path))
             {
@@ -50,14 +80,16 @@ namespace Juker.View
         }
         private void InsertData(string FilePath)
         {
-            Company company = new Company
+            Company company = new Company();
+            if (isCompanyCustomer)
             {
-                Name = CompanyName.Text,
-                Street = CompanyStreet.Text,
-                HouseNumber = CompanyHouseNumber.Text,
-                City = CompanyCity.Text,
-                Country = CompanyCountry.Text,
-            };
+                company.Name = CompanyName.Text;
+                company.Street = CompanyStreet.Text;
+                company.HouseNumber = CompanyHouseNumber.Text;
+                company.City = CompanyCity.Text;
+                company.Country = CompanyCountry.Text;
+            }
+
             Customer newCustomer = new Customer()
             {
                 FirstName = FirstName.Text,
@@ -66,8 +98,9 @@ namespace Juker.View
                 Email = Email.Text,
                 PictureUrl = "",
                 Company = company,
-                ProductIntrests = null
+                ProductIntrests = productList.FindAll(products => products.Liked == true)
             };
+
 
             var initialJson = File.ReadAllText(FilePath);
             var existingCustomer = JArray.Parse(initialJson);
@@ -75,15 +108,37 @@ namespace Juker.View
             var jsonToOutput = JsonConvert.SerializeObject(existingCustomer, Formatting.Indented);
         }
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        private void CompanyCheckBoxChecked(object sender, RoutedEventArgs e)
         {
             CompanyExtensionHead.Visibility = Visibility.Visible;
             CompanyExtension.Visibility = Visibility.Visible;
+            isCompanyCustomer = true;
         }
-        private void CheckBox_UnChecked(object sender, RoutedEventArgs e)
+        private void CompanyCheckBoxUnchecked(object sender, RoutedEventArgs e)
         {
             CompanyExtension.Visibility = Visibility.Collapsed;
             CompanyExtensionHead.Visibility = Visibility.Collapsed;
+            isCompanyCustomer = false;
+        }
+
+        private void ProductCheckBoxChecked(object sender, RoutedEventArgs e)
+        {
+            if (sender != null)
+            {
+                CheckBox checkBox = (CheckBox)sender;
+                Product selectedProduct = (Product)checkBox.DataContext;
+                productList.Find(product => selectedProduct.Id == product.Id).Liked = true;
+            }
+        }
+
+        private void ProductCheckBoxUnchecked(object sender, RoutedEventArgs e)
+        {
+            if (sender != null)
+            {
+                CheckBox checkBox = (CheckBox)sender;
+                Product selectedProduct = (Product)checkBox.DataContext;
+                productList.Find(product => selectedProduct.Id == product.Id).Liked = false;
+            }
         }
     }
 }
