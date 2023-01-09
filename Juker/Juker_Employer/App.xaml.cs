@@ -20,7 +20,7 @@ namespace Juker_Employer
         {
             //Datenbankabfrage
 
-            DebugDbConnector();
+           // DebugDbConnector();
             
         }
 
@@ -28,8 +28,8 @@ namespace Juker_Employer
         {
             try
             {
-                string pathCustomer = "C:\\Users\\Startklar\\Documents\\Git_Repos\\JUKER\\customer_data.json";
-                string pathProduct = "C:\\Users\\Startklar\\Documents\\Git_Repos\\JUKER\\product.json";
+                string pathCustomer = "C:\\Users\\Kenrick\\source\\repos\\kaenguru123\\JUKER\\customer_data.json";
+                string pathProduct = "C:\\Users\\Kenrick\\source\\repos\\kaenguru123\\JUKER\\product.json";
 
                 var connector = new DbConnector();
 
@@ -38,7 +38,7 @@ namespace Juker_Employer
                 Customer test = connector.getCustomerById(1);
 
                 List<Product> testInterests = connector.getCustomerInterestsById(test.Id);
-                test.ProductIntrests = testInterests;
+                test.ProductInterests = testInterests;
 
 
                 connector.saveJsonToDatabase(pathCustomer);

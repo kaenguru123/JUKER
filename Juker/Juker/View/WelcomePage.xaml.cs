@@ -1,7 +1,4 @@
-﻿using Juker.Model;
-using Juker.Stores;
-using Juker.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,20 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Juker
+namespace Juker.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaktionslogik für WelcomePage.xaml
     /// </summary>
-    public partial class Juker : Window
+    public partial class WelcomePage : UserControl
     {
-        public Juker()
+        public WelcomePage()
         {
-            NavigationStore navigationStore = new NavigationStore();
-            navigationStore.CurrentViewModel = new WelcomePageViewModel(navigationStore);
             InitializeComponent();
-            DataContext = new MainViewModel(navigationStore);
         }
-
     }
 }
