@@ -24,7 +24,7 @@ namespace Juker.View
     /// </summary>
     public partial class Registration : UserControl
     {
-        string path = @"C:\Users\Kenrick\Downloads\messe.json"; //individuell anpassen
+        string path = "A:Downloads/customer.json"; //individuell anpassen
         public Registration()
         {
             InitializeComponent();
@@ -68,11 +68,25 @@ namespace Juker.View
                 Company = company,
                 ProductIntrests = null
             };
-
-            var initialJson = File.ReadAllText(FilePath);
-            var existingCustomer = JArray.Parse(initialJson);
-            existingCustomer.Add(newCustomer);
-            var jsonToOutput = JsonConvert.SerializeObject(existingCustomer, Formatting.Indented);
+            StreamReader r = new StreamReader(FilePath);
+            string initialJson = r.ReadToEnd();
+            r.Close();
+            if (initialJson != "")
+            {
+                List<Customer>list = JsonConvert.DeserializeObject<List<Customer>>(initialJson);
+                list.Add(newCustomer);
+                var jsonToOutput = JsonConvert.SerializeObject(list, Formatting.Indented);
+                File.WriteAllText(FilePath, jsonToOutput);
+            }
+            else
+            {
+                List<Customer> list = new List<Customer>();
+                list.Add(newCustomer);
+                string customerList = JsonConvert.SerializeObject(list, Formatting.Indented);
+                File.WriteAllText(FilePath, customerList);
+            }
+            
+            
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
