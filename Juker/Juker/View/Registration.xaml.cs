@@ -25,9 +25,10 @@ namespace Juker.View
     /// </summary>
     public partial class Registration : UserControl
     {
-        private readonly string path = @"C:\Users\LDK2FE\Downloads\messe.json"; //individuell anpassen
+        private readonly string path = @"C:\Users\Kenrick\Downloads\customer.json"; //individuell anpassen
 
         private List<Product> productList;
+        private List<Product> customerInterests;
         private bool isCompanyCustomer;
         public Registration()
         {
@@ -36,6 +37,7 @@ namespace Juker.View
             CompanyExtension.Visibility = Visibility.Collapsed;
 
             productList = new List<Product>();
+            customerInterests = new List<Product>();
             for (int i = 0; i < 15; i++)
             {
                 productList.Add(new Product()
@@ -98,7 +100,7 @@ namespace Juker.View
                 Email = Email.Text,
                 PictureUrl = "",
                 Company = company,
-                ProductIntrests = productList.FindAll(products => products.Liked == true)
+                ProductIntrests = customerInterests
             };
             StreamReader r = new StreamReader(FilePath);
             string initialJson = r.ReadToEnd();
@@ -140,7 +142,10 @@ namespace Juker.View
             {
                 CheckBox checkBox = (CheckBox)sender;
                 Product selectedProduct = (Product)checkBox.DataContext;
-                productList.Find(product => selectedProduct.Id == product.Id).Liked = true;
+                if (!customerInterests.Contains(selectedProduct))
+                {
+                    customerInterests.Add(selectedProduct);
+                }
             }
         }
 
@@ -150,7 +155,7 @@ namespace Juker.View
             {
                 CheckBox checkBox = (CheckBox)sender;
                 Product selectedProduct = (Product)checkBox.DataContext;
-                productList.Find(product => selectedProduct.Id == product.Id).Liked = false;
+                customerInterests.Remove(selectedProduct);
             }
         }
     }

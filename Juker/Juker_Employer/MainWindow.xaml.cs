@@ -25,7 +25,7 @@ namespace Juker_Employer
     public partial class MainWindow : Window
     {
         private DbConnector _dbConnector = new DbConnector();
-        private string pathBase = @"C:\Users\LDK2FE\Downloads\"; //individuell anpassen
+        private string pathBase = @"C:\Users\Kenrick\Downloads\"; //individuell anpassen
 
         public MainWindow()
         {
