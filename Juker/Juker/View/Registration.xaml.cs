@@ -27,11 +27,14 @@ namespace Juker.View
         private List<Product> productList;
         private List<Product> customerInterests;
         private bool isCompanyCustomer;
+
         public Registration()
         {
             InitializeComponent();
             CompanyExtensionHead.Visibility = Visibility.Collapsed;
             CompanyExtension.Visibility = Visibility.Collapsed;
+
+            customerInterests = new List<Product>();
 
             var downloadDirectory = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders", "{374DE290-123F-4565-9164-39C4925E467B}", String.Empty).ToString();
 
@@ -92,7 +95,7 @@ namespace Juker.View
                 Email = Email.Text,
                 PictureUrl = "",
                 Company = company,
-                ProductIntrests = customerInterests
+                ProductInterests = customerInterests
             };
             StreamReader r = new StreamReader(FilePath);
             string initialJson = r.ReadToEnd();

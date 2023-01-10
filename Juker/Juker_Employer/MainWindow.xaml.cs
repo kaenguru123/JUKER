@@ -1,6 +1,4 @@
-﻿using Juker.Model;
-
-using Juker_Employer.Model;
+﻿using Juker_Employer.Model;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;

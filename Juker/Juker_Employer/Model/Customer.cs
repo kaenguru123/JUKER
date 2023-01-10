@@ -5,7 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Juker.Model
+namespace Juker_Employer.Model
 {
     internal class Customer
     {

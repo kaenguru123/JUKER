@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Juker.Model
+namespace Juker_Employer.Model
 {
     public class Product
     {

@@ -11,7 +11,7 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Markup;
-using Juker.Model;
+using Juker_Employer.Model;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI.Common;
 using Newtonsoft.Json;
@@ -151,24 +151,22 @@ namespace Juker_Employer.Model
             return resultNames;
         }
 
-        public bool saveJsonToDatabase(string path)
+        public void saveJsonToDatabase(string path)
         {
             var jsonData = File.ReadAllText(path);
             try
             {
-                JsonSerializerSettings jsonSeriSettings = new JsonSerializerSettings();
-                jsonSeriSettings.MaxDepth = null;
-                List<Customer> newCustomers = JsonConvert.DeserializeObject<List<Customer>>(jsonData, jsonSeriSettings);
+                List<Customer> newCustomers = JsonConvert.DeserializeObject<List<Customer>>(jsonData);
                 foreach (Customer customer in newCustomers)
                 {
                     saveCustomerToDatabase(customer);
                 }
+                File.Create(path).Close();
             }
             catch
             {
-                return false;
+                throw;
             }
-            return true;
         }
         public bool updateProductJson(string path)
         {
@@ -216,14 +214,15 @@ namespace Juker_Employer.Model
         private bool saveCustomerToDatabase(Customer customerToSave)
         {
             int? companyId = null;
-            if (customerToSave.Company != null)
+            if (customerToSave.Company != null && customerToSave.Company.Name != null)
             {
                 companyId = trySaveCompanyToDatabaseIfNotExisting(customerToSave.Company);
             }
+            string companyIdAsString = companyId!=null ? companyId.ToString() : "NULL";
             string query = "INSERT INTO " +
                             "`customer` " +
                             "(`customer_id`, `first_name`, `last_name`, `phone_number`, `email`, `photo_url`, `company`) " +
-                            $"VALUES(NULL, '{customerToSave.FirstName}', '{customerToSave.LastName}', '{customerToSave.PhoneNumber}', '{customerToSave.Email}', '{customerToSave.PictureUrl}', {companyId});";
+                            $"VALUES(NULL, '{customerToSave.FirstName}', '{customerToSave.LastName}', '{customerToSave.PhoneNumber}', '{customerToSave.Email}', '{customerToSave.PictureUrl}', {companyIdAsString});";
 
             Command.CommandText = query;
             if (Command.ExecuteNonQuery() == 0) return false;
