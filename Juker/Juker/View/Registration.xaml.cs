@@ -25,7 +25,7 @@ namespace Juker.View
     /// </summary>
     public partial class Registration : UserControl
     {
-        private readonly string path = @"C:\Users\Kenrick\Downloads\messe.json"; //individuell anpassen
+        private readonly string path = @"C:\Users\LDK2FE\Downloads\messe.json"; //individuell anpassen
 
         private List<Product> productList;
         private bool isCompanyCustomer;
@@ -100,12 +100,25 @@ namespace Juker.View
                 Company = company,
                 ProductIntrests = productList.FindAll(products => products.Liked == true)
             };
-
-
-            var initialJson = File.ReadAllText(FilePath);
-            var existingCustomer = JArray.Parse(initialJson);
-            existingCustomer.Add(newCustomer);
-            var jsonToOutput = JsonConvert.SerializeObject(existingCustomer, Formatting.Indented);
+            StreamReader r = new StreamReader(FilePath);
+            string initialJson = r.ReadToEnd();
+            r.Close();
+            if (initialJson != "")
+            {
+                List<Customer>list = JsonConvert.DeserializeObject<List<Customer>>(initialJson);
+                list.Add(newCustomer);
+                var jsonToOutput = JsonConvert.SerializeObject(list, Formatting.Indented);
+                File.WriteAllText(FilePath, jsonToOutput);
+            }
+            else
+            {
+                List<Customer> list = new List<Customer>();
+                list.Add(newCustomer);
+                string customerList = JsonConvert.SerializeObject(list, Formatting.Indented);
+                File.WriteAllText(FilePath, customerList);
+            }
+            
+            
         }
 
         private void CompanyCheckBoxChecked(object sender, RoutedEventArgs e)

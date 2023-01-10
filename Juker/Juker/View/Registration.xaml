@@ -166,7 +166,7 @@
             </Grid>
 
             <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Margin ="5 30 10 0" Command="{Binding NavigateToThankYouPageCommand}">
+                <Button Margin ="5 30 10 0" Command="{Binding NavigateToThankYouPageCommand}" Click="SubmitButtonClick">
                     <TextBlock FontSize="15" Text="Submit"/>
                 </Button>
                 <Button  Margin ="5  30 5 0 " Command="{Binding NavigateToWelcomePageCommand}">
