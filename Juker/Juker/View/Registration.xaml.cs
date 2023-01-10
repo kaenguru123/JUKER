@@ -25,6 +25,7 @@ namespace Juker.View
         private string pathCustomer { get; set; }
 
         private List<Product> productList;
+        private List<Product> customerInterests;
         private bool isCompanyCustomer;
         public Registration()
         {
@@ -91,7 +92,7 @@ namespace Juker.View
                 Email = Email.Text,
                 PictureUrl = "",
                 Company = company,
-                ProductIntrests = productList.FindAll(products => products.Liked == true)
+                ProductIntrests = customerInterests
             };
             StreamReader r = new StreamReader(FilePath);
             string initialJson = r.ReadToEnd();
@@ -110,6 +111,8 @@ namespace Juker.View
                 string customerList = JsonConvert.SerializeObject(list, Formatting.Indented);
                 File.WriteAllText(FilePath, customerList);
             }
+            
+            
         }
 
         private void CompanyCheckBoxChecked(object sender, RoutedEventArgs e)
@@ -131,7 +134,10 @@ namespace Juker.View
             {
                 CheckBox checkBox = (CheckBox)sender;
                 Product selectedProduct = (Product)checkBox.DataContext;
-                productList.Find(product => selectedProduct.Id == product.Id).Liked = true;
+                if (!customerInterests.Contains(selectedProduct))
+                {
+                    customerInterests.Add(selectedProduct);
+                }
             }
         }
 
@@ -141,7 +147,7 @@ namespace Juker.View
             {
                 CheckBox checkBox = (CheckBox)sender;
                 Product selectedProduct = (Product)checkBox.DataContext;
-                productList.Find(product => selectedProduct.Id == product.Id).Liked = false;
+                customerInterests.Remove(selectedProduct);
             }
         }
     }
