@@ -25,7 +25,7 @@ namespace Juker.View
     /// </summary>
     public partial class Registration : UserControl
     {
-        private readonly string path = @"C:\Users\Kenrick\Downloads\messe.json"; //individuell anpassen
+        private readonly string path = @"C:\Users\LDK2FE\Downloads\messe.json"; //individuell anpassen
 
         private List<Product> productList;
         private bool isCompanyCustomer;
