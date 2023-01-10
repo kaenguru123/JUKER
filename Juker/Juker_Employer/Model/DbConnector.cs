@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,11 +26,10 @@ namespace Juker_Employer.Model
         private MySqlCommand Command { get; set; }
         public List<Company> CompanyList { get; set; }
         public List<Company> CompanyListWithoutIds { get; set; }
-        public DbConnector()
+        public DbConnector(string ConnectionString)
         {
             try
             {
-                string ConnectionString = "server=localhost;database=juker;userid=root;";
                 Connection = new MySqlConnection();
                 Connection.ConnectionString = ConnectionString;
 
@@ -156,7 +156,9 @@ namespace Juker_Employer.Model
             var jsonData = File.ReadAllText(path);
             try
             {
-                List<Customer> newCustomers = JsonConvert.DeserializeObject<List<Customer>>(jsonData);
+                JsonSerializerSettings jsonSeriSettings = new JsonSerializerSettings();
+                jsonSeriSettings.MaxDepth = null;
+                List<Customer> newCustomers = JsonConvert.DeserializeObject<List<Customer>>(jsonData, jsonSeriSettings);
                 foreach (Customer customer in newCustomers)
                 {
                     saveCustomerToDatabase(customer);

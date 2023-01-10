@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Printing;
@@ -7,14 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Markup;
 using Juker.Model;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -24,8 +20,9 @@ namespace Juker.View
     /// Interaktionslogik für Registration.xaml
     /// </summary>
     public partial class Registration : UserControl
-    {
-        private readonly string path = @"C:\Users\LDK2FE\Downloads\messe.json"; //individuell anpassen
+    {        
+        private string pathProduct { get; set; }
+        private string pathCustomer { get; set; }
 
         private List<Product> productList;
         private bool isCompanyCustomer;
@@ -35,48 +32,44 @@ namespace Juker.View
             CompanyExtensionHead.Visibility = Visibility.Collapsed;
             CompanyExtension.Visibility = Visibility.Collapsed;
 
-            productList = new List<Product>();
-            for (int i = 0; i < 15; i++)
-            {
-                productList.Add(new Product()
-                {
-                    Id = 0,
-                    Name = "Bohrer",
-                    Category = "Maschin"
-                });
+            var downloadDirectory = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders", "{374DE290-123F-4565-9164-39C4925E467B}", String.Empty).ToString();
 
+            var productDestDir = ConfigurationManager.AppSettings["product.json"] ?? "";
+            pathProduct = downloadDirectory + productDestDir + "\\product.json";
+
+            var customerDestDir = ConfigurationManager.AppSettings["customer.json"] ?? "";
+            pathCustomer = downloadDirectory + customerDestDir + "\\customer.json";
+
+            if (!(File.Exists(pathProduct)))
+            {
+                File.Create(pathProduct).Close();
             }
-
-            productList.Add(new Product()
+            try
             {
-                Id = 0,
-                Name = "Bohrer",
-                Category = "Maschin"
-            });
-            productList.Add(new Product()
+                var jsonDataProduct = File.ReadAllText(pathProduct);
+                List<Product> productList = JsonConvert.DeserializeObject<List<Product>>(jsonDataProduct);
+                ProductListView.ItemsSource = productList;
+            }
+            catch
             {
-                Id = 1,
-                Name = "Wasch",
-                Category = "Maschin"
-            });
-
-            ProductListView.ItemsSource = productList;
+                throw;
+            }
         }
 
         private void SubmitButtonClick(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(path))
+            try
             {
-                InsertData(path);
+                if (!(File.Exists(pathCustomer)))
+                {
+                    File.Create(pathCustomer).Close();
+                }
+                InsertData(pathCustomer);
             }
-            else
+            catch
             {
-                File.Create(path).Close();
-                InsertData(path);
-
+                throw;
             }
-
-
         }
         private void InsertData(string FilePath)
         {
@@ -117,8 +110,6 @@ namespace Juker.View
                 string customerList = JsonConvert.SerializeObject(list, Formatting.Indented);
                 File.WriteAllText(FilePath, customerList);
             }
-            
-            
         }
 
         private void CompanyCheckBoxChecked(object sender, RoutedEventArgs e)

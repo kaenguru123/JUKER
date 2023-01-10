@@ -24,34 +24,34 @@ namespace Juker_Employer
             
         }
 
-        private bool DebugDbConnector()
-        {
-            try
-            {
-                string pathCustomer = "C:\\Users\\Kenrick\\source\\repos\\kaenguru123\\JUKER\\customer_data.json";
-                string pathProduct = "C:\\Users\\Kenrick\\source\\repos\\kaenguru123\\JUKER\\product.json";
+        //private bool DebugDbConnector()
+        //{
+        //    try
+        //    {
+        //        string pathCustomer = "C:\\Users\\Kenrick\\source\\repos\\kaenguru123\\JUKER\\customer_data.json";
+        //        string pathProduct = "C:\\Users\\Kenrick\\source\\repos\\kaenguru123\\JUKER\\product.json";
 
-                var connector = new DbConnector();
+        //        var connector = new DbConnector();
 
-                List<Customer> customerList = connector.getCustomerNameList();
+        //        List<Customer> customerList = connector.getCustomerNameList();
 
-                Customer test = connector.getCustomerById(1);
+        //        Customer test = connector.getCustomerById(1);
 
-                List<Product> testInterests = connector.getCustomerInterestsById(test.Id);
-                test.ProductInterests = testInterests;
+        //        List<Product> testInterests = connector.getCustomerInterestsById(test.Id);
+        //        test.ProductInterests = testInterests;
 
 
-                connector.saveJsonToDatabase(pathCustomer);
+        //        connector.saveJsonToDatabase(pathCustomer);
 
-                connector.updateProductJson(pathProduct);
+        //        connector.updateProductJson(pathProduct);
 
-                return true;
-            }
-            catch (Exception)
-            {
-                throw;
-                return false;
-            }
-        }
+        //        return true;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //        return false;
+        //    }
+        //}
     }
 }

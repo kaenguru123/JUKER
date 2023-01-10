@@ -1,6 +1,7 @@
 ﻿using Juker.Model;
 
 using Juker_Employer.Model;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -24,22 +25,36 @@ namespace Juker_Employer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DbConnector _dbConnector = new DbConnector();
-        private string pathBase = @"C:\Users\LDK2FE\Downloads\"; //individuell anpassen
+        private DbConnector DbConnection { get; set; }
+        private string pathCustomer { get; set; }
+        private string pathProduct { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
 
-            List<Customer> customers = _dbConnector.getCustomerNameList();
+            var downloadDirectory = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders", "{374DE290-123F-4565-9164-39C4925E467B}", String.Empty).ToString();
+
+            var productDestDir = ConfigurationManager.AppSettings["product.json"] ?? "";
+            pathProduct = downloadDirectory + productDestDir + "\\product.json";
+
+            var customerDestDir = ConfigurationManager.AppSettings["customer.json"] ?? "";
+            pathCustomer = downloadDirectory + customerDestDir + "\\customer.json";
+
+            string ConnectionString = ConfigurationManager.AppSettings["connectionstring"];
+            ConnectionString = ConnectionString ?? "server=localhost;database=juker;userid=root;";
+
+            DbConnection = new DbConnector(ConnectionString);
+
+            List<Customer> customers = DbConnection.getCustomerNameList();
 
             foreach (Customer customer in customers)
             {
-                customer.ProductInterests = _dbConnector.getCustomerInterestsById(customer.Id);
+                customer.ProductInterests = DbConnection.getCustomerInterestsById(customer.Id);
             }
             CustomerList.ItemsSource = customers;
 
-            List<Product> productInterests = _dbConnector.getProducts();
+            List<Product> productInterests = DbConnection.getProducts();
             ProductList.ItemsSource = productInterests;
         }
 
@@ -54,12 +69,12 @@ namespace Juker_Employer
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            _dbConnector.saveJsonToDatabase(pathBase + "customer.json");
+            DbConnection.saveJsonToDatabase(pathCustomer);
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            _dbConnector.updateProductJson(pathBase + "product.json");
+            DbConnection.updateProductJson(pathProduct);
         }
     }
 }

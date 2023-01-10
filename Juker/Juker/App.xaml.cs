@@ -1,5 +1,6 @@
 ﻿using Juker.Model;
 using Juker.ViewModel;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,10 @@ namespace Juker
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-
             MainWindow = new Juker();
             MainWindow.Show();
 
             base.OnStartup(e);
-
-
         }
     }
 }
