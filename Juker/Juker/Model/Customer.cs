@@ -14,7 +14,7 @@ namespace Juker.Model
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string PictureUrl { get; set; }
+        public string PhotoUrl { get; set; }
         public Company Company { get; set; }
         public List<Product> ProductInterests { get; set; }
     }

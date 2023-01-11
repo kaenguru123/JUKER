@@ -198,6 +198,7 @@ namespace Juker_Employer.Model
                     saveCustomerToDatabase(customer);
                 }
                 File.Create(path).Close();
+                MessageBoxHelper.throwSuccessMessageBox("Saved \"customer\" successfully to database");
             }
             catch (Exception ex)
             {
@@ -228,6 +229,7 @@ namespace Juker_Employer.Model
 
                 var resultProductsInJson = JsonConvert.SerializeObject(resultProducts, Formatting.Indented);
                 File.WriteAllText(path, resultProductsInJson);
+                MessageBoxHelper.throwSuccessMessageBox("Updated \"product.json\" successfully");
             }
             catch (MySqlException ex)
             {
@@ -254,19 +256,35 @@ namespace Juker_Employer.Model
             {
                 companyId = trySaveCompanyToDatabaseIfNotExisting(customerToSave.Company);
             }
+            string Photo = null;
+            if (customerToSave.PhotoUrl != "" && customerToSave.PhotoUrl != null)
+            {
+                FileStream imgStream = File.OpenRead(customerToSave.PhotoUrl);
+                byte[] blob = new byte[imgStream.Length];
+                imgStream.Read(blob, 0, (int)imgStream.Length);
+                Photo = imgStream.ToString();
+                imgStream.Dispose();
+            }
+            else
+            {
+                Photo = "NULL";
+            }
+
             string companyIdAsString = companyId!=null ? companyId.ToString() : "NULL";
             string query = "INSERT INTO " +
                             "`customer` " +
                             "(`customer_id`, `first_name`, `last_name`, `phone_number`, `email`, `photo_url`, `company`) " +
-                            $"VALUES(NULL, '{customerToSave.FirstName}', '{customerToSave.LastName}', '{customerToSave.PhoneNumber}', '{customerToSave.Email}', '{customerToSave.PictureUrl}', {companyIdAsString});";
+                            $"VALUES(NULL, '{customerToSave.FirstName}', '{customerToSave.LastName}', '{customerToSave.PhoneNumber}', '{customerToSave.Email}', {Photo}, {companyIdAsString});";
 
             Command.CommandText = query;
             if (Command.ExecuteNonQuery() == 0) return false;
             int customerId = getLastInsertedId();
-
-            foreach (Product product in customerToSave.ProductInterests)
-            {
-                saveProductInterestToDatabase(product.Id, customerId);
+            
+            if (customerToSave.ProductInterests != null && customerToSave.ProductInterests.Count != 0) { 
+                foreach (Product product in customerToSave.ProductInterests)
+                {
+                    saveProductInterestToDatabase(product.Id, customerId);
+                }
             }
             return true;
         }
@@ -368,7 +386,7 @@ namespace Juker_Employer.Model
             validCustomer.LastName = tryIndex(data, "last_name") ? data["last_name"].ToString() : default(string);
             validCustomer.PhoneNumber = tryIndex(data, "phone_number") ? data["phone_number"].ToString() : default(string);
             validCustomer.Email = tryIndex(data, "email") ? data["email"].ToString() : default(string);
-            validCustomer.PictureUrl = tryIndex(data, "picture_url") ? data["picture_url"].ToString() : default(string);
+            validCustomer.PhotoUrl = tryIndex(data, "picture_url") ? data["picture_url"].ToString() : default(string);
             int CompanyId = tryIndex(data, "company") ? Int32.Parse(data["company"].ToString()) : default(int);
             if (CompanyId != default(int))
             {

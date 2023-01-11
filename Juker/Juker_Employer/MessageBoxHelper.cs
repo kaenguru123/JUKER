@@ -15,5 +15,11 @@ namespace Juker_Employer
                                  MessageBoxButton.OK,
                                  MessageBoxImage.Error);
         }
+        public static void throwSuccessMessageBox(string message, string caption = "")
+        {
+            MessageBox.Show(message, "Success!",
+                                 MessageBoxButton.OK,
+                                 MessageBoxImage.Information);
+        }
     }
 }

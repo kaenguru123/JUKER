@@ -109,7 +109,7 @@ namespace Juker.View
                 LastName = LastName.Text,
                 PhoneNumber = PhoneNumber.Text,
                 Email = Email.Text,
-                PictureUrl = newPath,
+                PhotoUrl = newPath,
                 Company = company,
                 ProductInterests = customerInterests
             };
@@ -138,8 +138,6 @@ namespace Juker.View
                 bitmapImage.Freeze();
                 Dispatcher.BeginInvoke(new ThreadStart(delegate
                 { Webcam.Source = bitmapImage; }));
-
-
             }
             catch (Exception ex)
             {
