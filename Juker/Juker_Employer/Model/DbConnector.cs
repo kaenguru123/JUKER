@@ -256,25 +256,14 @@ namespace Juker_Employer.Model
             {
                 companyId = trySaveCompanyToDatabaseIfNotExisting(customerToSave.Company);
             }
-            string Photo = null;
-            if (customerToSave.PhotoUrl != "" && customerToSave.PhotoUrl != null)
-            {
-                FileStream imgStream = File.OpenRead(customerToSave.PhotoUrl);
-                byte[] blob = new byte[imgStream.Length];
-                imgStream.Read(blob, 0, (int)imgStream.Length);
-                Photo = imgStream.ToString();
-                imgStream.Dispose();
-            }
-            else
-            {
-                Photo = "NULL";
-            }
+            
 
+         
             string companyIdAsString = companyId!=null ? companyId.ToString() : "NULL";
             string query = "INSERT INTO " +
                             "`customer` " +
                             "(`customer_id`, `first_name`, `last_name`, `phone_number`, `email`, `photo_url`, `company`) " +
-                            $"VALUES(NULL, '{customerToSave.FirstName}', '{customerToSave.LastName}', '{customerToSave.PhoneNumber}', '{customerToSave.Email}', {Photo}, {companyIdAsString});";
+                            $"VALUES(NULL, '{customerToSave.FirstName}', '{customerToSave.LastName}', '{customerToSave.PhoneNumber}', '{customerToSave.Email}', '{customerToSave.PhotoUrl}', {companyIdAsString});";
 
             Command.CommandText = query;
             if (Command.ExecuteNonQuery() == 0) return false;
