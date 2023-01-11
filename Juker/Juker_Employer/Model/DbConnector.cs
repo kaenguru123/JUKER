@@ -386,7 +386,7 @@ namespace Juker_Employer.Model
             validCustomer.LastName = tryIndex(data, "last_name") ? data["last_name"].ToString() : default(string);
             validCustomer.PhoneNumber = tryIndex(data, "phone_number") ? data["phone_number"].ToString() : default(string);
             validCustomer.Email = tryIndex(data, "email") ? data["email"].ToString() : default(string);
-            validCustomer.PhotoUrl = tryIndex(data, "picture_url") ? data["picture_url"].ToString() : default(string);
+            validCustomer.PhotoUrl = tryIndex(data, "photo_url") ? data["photo_url"].ToString() : default(string);
             int CompanyId = tryIndex(data, "company") ? Int32.Parse(data["company"].ToString()) : default(int);
             if (CompanyId != default(int))
             {
