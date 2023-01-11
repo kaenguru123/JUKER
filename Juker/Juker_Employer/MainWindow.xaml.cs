@@ -52,8 +52,8 @@ namespace Juker_Employer
             }
             CustomerList.ItemsSource = customers;
 
-            List<Product> productInterests = DbConnection.getProducts();
-            ProductList.ItemsSource = productInterests;
+           // List<Product> productInterests = DbConnection.getProducts();
+            //ProductList.ItemsSource = productInterests;
         }
 
         private void CustomerList_SelectionChanged(object sender, SelectionChangedEventArgs e)

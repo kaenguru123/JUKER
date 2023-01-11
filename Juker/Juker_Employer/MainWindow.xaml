@@ -30,7 +30,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" >
-            <TextBlock FontSize="15" FontWeight="Bold" Text="Product Interests" HorizontalAlignment="Center" Margin="0 0 0 10"/>
+            <TextBlock FontSize="15" FontWeight="Bold" Text="Product Interests" HorizontalAlignment="Center" Margin="0 0 0 10" MaxWidth="300"/>
             <ListView Name="ProductList">
                 <ListView.View>
                     <GridView>
@@ -46,7 +46,7 @@
                 <TextBlock Text="Save Json" />
             </Button>
             <Button Click="UpdateButton_Click" Height="20" Margin="5 0 0 0">
-                <TextBlock Text="Update produt.json"/>
+                <TextBlock Text="Update product.json"/>
             </Button>
         </StackPanel>
 

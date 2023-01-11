@@ -43,8 +43,8 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Our Products" FontSize="60" Margin="0 0 0 20" />
-            <ListView Name="ProductListView" Grid.Row="1">
+            <TextBlock Text="Our Products" FontSize="60" Margin="0 0 0 20" HorizontalAlignment="Center" />
+            <ListView Name="ProductListView" Grid.Row="1" MaxWidth="700">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Style.Triggers>
