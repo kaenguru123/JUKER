@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Markup;
 using Juker.Model;
 using Microsoft.Win32;
@@ -54,9 +55,11 @@ namespace Juker.View
                 List<Product> productList = JsonConvert.DeserializeObject<List<Product>>(jsonDataProduct);
                 ProductListView.ItemsSource = productList;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                MessageBoxHelper.throwErrorMessageBox(
+                    ex.Message + "\nNo products in customer.json or wrong path to customer.json.",
+                    "Could not retrieve list of product from product.json");
             }
         }
 
@@ -70,9 +73,11 @@ namespace Juker.View
                 }
                 InsertData(pathCustomer);
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                MessageBoxHelper.throwErrorMessageBox(
+                    ex.Message + "\ngive all mandatory information.",
+                    "Invalid input");
             }
         }
         private void InsertData(string FilePath)
@@ -100,22 +105,11 @@ namespace Juker.View
             StreamReader r = new StreamReader(FilePath);
             string initialJson = r.ReadToEnd();
             r.Close();
-            if (initialJson != "")
-            {
-                List<Customer>list = JsonConvert.DeserializeObject<List<Customer>>(initialJson);
-                list.Add(newCustomer);
-                var jsonToOutput = JsonConvert.SerializeObject(list, Formatting.Indented);
-                File.WriteAllText(FilePath, jsonToOutput);
-            }
-            else
-            {
-                List<Customer> list = new List<Customer>();
-                list.Add(newCustomer);
-                string customerList = JsonConvert.SerializeObject(list, Formatting.Indented);
-                File.WriteAllText(FilePath, customerList);
-            }
             
-            
+            var list = initialJson != "" ? JsonConvert.DeserializeObject<List<Customer>>(initialJson) : new List<Customer>();
+            list.Add(newCustomer);
+            string customerList = JsonConvert.SerializeObject(list, Formatting.Indented);
+            File.WriteAllText(FilePath, customerList);
         }
 
         private void CompanyCheckBoxChecked(object sender, RoutedEventArgs e)
