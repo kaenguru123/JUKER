@@ -96,13 +96,18 @@ namespace Juker.View
                 company.City = CompanyCity.Text;
                 company.Country = CompanyCountry.Text;
             }
-            if (FirstName.Text != null || FirstName.Text != "")
+            if (isValidData())
             {
                 FileInfo file = new FileInfo(downloadDirectory + "\\image.jpeg");
                 string pictureFileName = FirstName.Text + DateTime.Now.ToString("M/d/yyyy");
                 newPath = downloadDirectory + $"\\{pictureFileName}.jpeg";
                 file.MoveTo(newPath); // hier könnte noch ein ,true hinter den newPath
             }
+      else
+      {
+        throw new InvalidDataException("Bitten Füllen Sie alle Felder aus");
+      }
+      
             Customer newCustomer = new Customer()
             {
                 FirstName = FirstName.Text,
@@ -223,7 +228,6 @@ namespace Juker.View
                 img.Save(downloadDirectory + "\\image.jpeg", ImageFormat.Jpeg);
                 img.Save(downloadDirectory + "\\imageTemp.jpeg", ImageFormat.Jpeg);
                 Webcam.Source = new BitmapImage(new Uri(downloadDirectory + "\\imageTemp.jpeg"));
-                img.Dispose();
                 SaveButton.Visibility = Visibility.Collapsed;
             }
             catch (Exception ex)
@@ -234,7 +238,6 @@ namespace Juker.View
             }
             finally
             {
-                memoryStream.Dispose();
             }
         }
         private void SubmitButtonClick(object sender, RoutedEventArgs e)
@@ -260,7 +263,7 @@ namespace Juker.View
 
         private bool isValidData()
         {
-            return String.IsNullOrEmpty(FirstName.Text) && (isCompanyCustomer ? String.IsNullOrEmpty(CompanyName.Text) : true);
+            return !String.IsNullOrEmpty(FirstName.Text) && (isCompanyCustomer ? !String.IsNullOrEmpty(CompanyName.Text) : true);
         }
     }
 }
