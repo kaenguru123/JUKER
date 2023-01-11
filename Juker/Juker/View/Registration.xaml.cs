@@ -22,6 +22,7 @@ using System.Threading;
 using System.Windows.Media.Imaging;
 using static System.Net.Mime.MediaTypeNames;
 using Image = System.Drawing.Image;
+using Juker.ViewModel;
 
 namespace Juker.View
 {
@@ -142,7 +143,9 @@ namespace Juker.View
             }
             catch (Exception ex)
             {
-                //catch your error here
+                 MessageBoxHelper.throwErrorMessageBox(
+                    ex.Message + "\nSomething went wrong with rendering",
+                    "Rendering error");
             }
         }
         #endregion
@@ -250,13 +253,18 @@ namespace Juker.View
                 MessageBoxHelper.throwErrorMessageBox(
                     ex.Message + "\ngive all mandatory information.",
                     "Invalid input");
+                ((RegistrationViewModel)DataContext).IsSaveable = false; 
             }
         }
 
+
+
         #endregion
 
+        private void CommandBinding_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
 
-
+        }
     }
 }
 

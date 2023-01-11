@@ -24,5 +24,15 @@ namespace Juker.Commands
         {
             navigationStore.CurrentViewModel = createViewModel();
         }
+
+        public override bool CanExecute(object? parameter)
+        {
+            if (navigationStore.CurrentViewModel.IsSaveable == false)
+            {
+                navigationStore.CurrentViewModel.IsSaveable = true;
+                return false;
+            }
+            return true;
+        }
     }
 }
