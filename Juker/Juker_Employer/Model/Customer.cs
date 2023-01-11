@@ -14,7 +14,7 @@ namespace Juker_Employer.Model
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string PictureUrl { get; set; }
+        public string PhotoUrl { get; set; }
         virtual public Company Company { get; set; }
         virtual public List<Product> ProductInterests { get; set; }
     }

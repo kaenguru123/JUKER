@@ -108,7 +108,7 @@ namespace Juker.View
                 LastName = LastName.Text,
                 PhoneNumber = PhoneNumber.Text,
                 Email = Email.Text,
-                PictureUrl = newPath,
+                PhotoUrl = newPath,
                 Company = company,
                 ProductInterests = customerInterests
             };

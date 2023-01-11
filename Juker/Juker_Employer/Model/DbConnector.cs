@@ -254,11 +254,25 @@ namespace Juker_Employer.Model
             {
                 companyId = trySaveCompanyToDatabaseIfNotExisting(customerToSave.Company);
             }
+            string Photo = null;
+            if (customerToSave.PhotoUrl != "" && customerToSave.PhotoUrl != null)
+            {
+                FileStream imgStream = File.OpenRead(customerToSave.PhotoUrl);
+                byte[] blob = new byte[imgStream.Length];
+                imgStream.Read(blob, 0, (int)imgStream.Length);
+                Photo = imgStream.ToString();
+                imgStream.Dispose();
+            }
+            else
+            {
+                Photo = "NULL";
+            }
+
             string companyIdAsString = companyId!=null ? companyId.ToString() : "NULL";
             string query = "INSERT INTO " +
                             "`customer` " +
                             "(`customer_id`, `first_name`, `last_name`, `phone_number`, `email`, `photo_url`, `company`) " +
-                            $"VALUES(NULL, '{customerToSave.FirstName}', '{customerToSave.LastName}', '{customerToSave.PhoneNumber}', '{customerToSave.Email}', '{customerToSave.PictureUrl}', {companyIdAsString});";
+                            $"VALUES(NULL, '{customerToSave.FirstName}', '{customerToSave.LastName}', '{customerToSave.PhoneNumber}', '{customerToSave.Email}', {Photo}, {companyIdAsString});";
 
             Command.CommandText = query;
             if (Command.ExecuteNonQuery() == 0) return false;
@@ -358,6 +372,26 @@ namespace Juker_Employer.Model
 
             return validCompany;
         }
+        private static CustomerWithBlob getValidCustomerWithBlob(MySqlDataReader data)
+        {
+            if (data == null) { return null; }
+            var validCustomer = new CustomerWithBlob();
+
+            validCustomer.Id = tryIndex(data, "customer_id") ? Int32.Parse(data["customer_id"].ToString()) : default(int);
+            validCustomer.FirstName = tryIndex(data, "first_name") ? data["first_name"].ToString() : default(string);
+            validCustomer.LastName = tryIndex(data, "last_name") ? data["last_name"].ToString() : default(string);
+            validCustomer.PhoneNumber = tryIndex(data, "phone_number") ? data["phone_number"].ToString() : default(string);
+            validCustomer.Email = tryIndex(data, "email") ? data["email"].ToString() : default(string);
+            validCustomer.Photo = tryIndex(data, "photo") ? Blob(data["photo"]) : default(byte[]);
+            
+            int CompanyId = tryIndex(data, "company") ? Int32.Parse(data["company"].ToString()) : default(int);
+            if (CompanyId != default(int))
+            {
+                validCustomer.Company = getValidCompany(data);
+            }
+
+            return validCustomer;
+        }
         private static Customer getValidCustomer(MySqlDataReader data)
         {
             if (data == null) { return null; }
@@ -368,7 +402,7 @@ namespace Juker_Employer.Model
             validCustomer.LastName = tryIndex(data, "last_name") ? data["last_name"].ToString() : default(string);
             validCustomer.PhoneNumber = tryIndex(data, "phone_number") ? data["phone_number"].ToString() : default(string);
             validCustomer.Email = tryIndex(data, "email") ? data["email"].ToString() : default(string);
-            validCustomer.PictureUrl = tryIndex(data, "picture_url") ? data["picture_url"].ToString() : default(string);
+            validCustomer.PhotoUrl = tryIndex(data, "picture_url") ? data["picture_url"].ToString() : default(string);
             int CompanyId = tryIndex(data, "company") ? Int32.Parse(data["company"].ToString()) : default(int);
             if (CompanyId != default(int))
             {
