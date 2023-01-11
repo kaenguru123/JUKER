@@ -27,9 +27,13 @@
 
         <Grid Grid.Row="1" Grid.Column="0">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                <Button Style="{DynamicResource ImageButton}" Margin="0 0 0 10"/>
-                <Rectangle  Width="300" Height="200" Fill="#FFEFD6" Margin="0 10 0 10"/>
-                <TextBlock Text="Click the symbol to take a picture!" />
+                <Button Name="StartCameraButton" Style="{DynamicResource ImageButton}" Margin="0 0 0 10" Click="StartCamera"/>
+                <TextBlock Text="Take a picture!" HorizontalAlignment="Center" />
+                <Rectangle Name="ImagePlaceHolder" Width="300" Height="200" Fill="#FFEFD6" Margin="0 10 0 10"/>
+                <Image Width="300" Height="200" Name="Webcam" Margin="0 10 0 10"/>
+                <Button Name ="SaveButton" Click="SaveImage" HorizontalAlignment="Center">
+                    <TextBlock FontSize="15" Text="Capture"/>
+                </Button>
             </StackPanel>
         </Grid>
 
@@ -40,38 +44,38 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Our Products" FontSize="60" Margin="0 0 0 20" />
-                <ListView Name="ProductListView" Grid.Row="1">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}">
-                            <Style.Triggers>
-                                <Trigger Property="Control.IsMouseOver" Value="True">
-                                    <Setter Property="Control.Background" Value="Transparent" />
-                                </Trigger>
-                            </Style.Triggers>
-                            <Setter Property="Focusable" Value="False"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn>
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <WrapPanel>
-                                            <CheckBox Checked="ProductCheckBoxChecked" Unchecked="ProductCheckBoxUnchecked"  Margin="0 0 0 10">
-                                                <CheckBox.RenderTransform>
-                                                    <ScaleTransform ScaleX="1.8" ScaleY="1.8"/>
-                                                </CheckBox.RenderTransform>
-                                            </CheckBox>
-                                        </WrapPanel>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
-                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                            <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+            <ListView Name="ProductListView" Grid.Row="1">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Style.Triggers>
+                            <Trigger Property="Control.IsMouseOver" Value="True">
+                                <Setter Property="Control.Background" Value="Transparent" />
+                            </Trigger>
+                        </Style.Triggers>
+                        <Setter Property="Focusable" Value="False"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <WrapPanel>
+                                        <CheckBox Checked="ProductCheckBoxChecked" Unchecked="ProductCheckBoxUnchecked"  Margin="0 0 0 10">
+                                            <CheckBox.RenderTransform>
+                                                <ScaleTransform ScaleX="1.8" ScaleY="1.8"/>
+                                            </CheckBox.RenderTransform>
+                                        </CheckBox>
+                                    </WrapPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </Grid>
 
         <Grid Grid.IsSharedSizeScope="True" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
