@@ -198,6 +198,7 @@ namespace Juker_Employer.Model
                     saveCustomerToDatabase(customer);
                 }
                 File.Create(path).Close();
+                MessageBoxHelper.throwSuccessMessageBox("Saved \"customer\" successfully to database");
             }
             catch (Exception ex)
             {
@@ -228,6 +229,7 @@ namespace Juker_Employer.Model
 
                 var resultProductsInJson = JsonConvert.SerializeObject(resultProducts, Formatting.Indented);
                 File.WriteAllText(path, resultProductsInJson);
+                MessageBoxHelper.throwSuccessMessageBox("Updated \"product.json\" successfully");
             }
             catch (MySqlException ex)
             {
@@ -277,10 +279,12 @@ namespace Juker_Employer.Model
             Command.CommandText = query;
             if (Command.ExecuteNonQuery() == 0) return false;
             int customerId = getLastInsertedId();
-
-            foreach (Product product in customerToSave.ProductInterests)
-            {
-                saveProductInterestToDatabase(product.Id, customerId);
+            
+            if (customerToSave.ProductInterests != null && customerToSave.ProductInterests.Count != 0) { 
+                foreach (Product product in customerToSave.ProductInterests)
+                {
+                    saveProductInterestToDatabase(product.Id, customerId);
+                }
             }
             return true;
         }
@@ -371,26 +375,6 @@ namespace Juker_Employer.Model
             validCompany.Country = tryIndex(data, "country") ? data["country"].ToString() : default(string);
 
             return validCompany;
-        }
-        private static CustomerWithBlob getValidCustomerWithBlob(MySqlDataReader data)
-        {
-            if (data == null) { return null; }
-            var validCustomer = new CustomerWithBlob();
-
-            validCustomer.Id = tryIndex(data, "customer_id") ? Int32.Parse(data["customer_id"].ToString()) : default(int);
-            validCustomer.FirstName = tryIndex(data, "first_name") ? data["first_name"].ToString() : default(string);
-            validCustomer.LastName = tryIndex(data, "last_name") ? data["last_name"].ToString() : default(string);
-            validCustomer.PhoneNumber = tryIndex(data, "phone_number") ? data["phone_number"].ToString() : default(string);
-            validCustomer.Email = tryIndex(data, "email") ? data["email"].ToString() : default(string);
-            validCustomer.Photo = tryIndex(data, "photo") ? Blob(data["photo"]) : default(byte[]);
-            
-            int CompanyId = tryIndex(data, "company") ? Int32.Parse(data["company"].ToString()) : default(int);
-            if (CompanyId != default(int))
-            {
-                validCustomer.Company = getValidCompany(data);
-            }
-
-            return validCustomer;
         }
         private static Customer getValidCustomer(MySqlDataReader data)
         {

@@ -137,8 +137,6 @@ namespace Juker.View
                 bitmapImage.Freeze();
                 Dispatcher.BeginInvoke(new ThreadStart(delegate
                 { Webcam.Source = bitmapImage; }));
-
-
             }
             catch (Exception ex)
             {

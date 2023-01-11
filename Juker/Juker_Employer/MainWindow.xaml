@@ -46,7 +46,7 @@
                 <TextBlock Text="Save Json" />
             </Button>
             <Button Click="UpdateButton_Click" Height="20" Margin="5 0 0 0">
-                <TextBlock Text="Update Products"/>
+                <TextBlock Text="Update produt.json"/>
             </Button>
         </StackPanel>
 
