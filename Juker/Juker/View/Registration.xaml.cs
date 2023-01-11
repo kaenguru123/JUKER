@@ -99,7 +99,7 @@ namespace Juker.View
             if (FirstName.Text != null || FirstName.Text != "")
             {
                 FileInfo file = new FileInfo(downloadDirectory + "\\image.jpeg");
-                string pictureFileName = FirstName.Text + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.ff");
+                string pictureFileName = FirstName.Text + DateTime.Now.ToString("M/d/yyyy");
                 newPath = downloadDirectory + $"\\{pictureFileName}.jpeg";
                 file.MoveTo(newPath); // hier könnte noch ein ,true hinter den newPath
             }
