@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -42,12 +43,11 @@ namespace Juker_Employer.Model
                 CompanyListWithoutIds = deepCopy(CompanyList);
                 foreach (Company company in CompanyListWithoutIds) { company.Id = -1; }
             }
-            catch (MySqlException err)
+            catch (MySqlException ex)
             {
-                MessageBox.Show(err.Message, "ERROR! Connection to database failed!",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Error);
-                Environment.Exit(-1);
+                MessageBoxHelper.throwErrorMessageBox(
+                    ex.Message + "\nCould not connect to database",
+                    "Database connection failed");
             }
         }
 
@@ -57,118 +57,156 @@ namespace Juker_Employer.Model
         }
         public Customer getCustomerById(int customerId)
         {
-            //SELECT* FROM customer LEFT OUTER JOIN company ON company.company_id = customer.company LEFT OUTER JOIN product_customer ON product_customer.customer_id = customer.customer_id LEFT OUTER JOIN product ON product.sap_id = product_customer.sap_number;
+            try
+            {
+                string query = "SELECT " +
+                                "* " +
+                                "FROM " +
+                                "`customer` " +
+                                "LEFT OUTER JOIN " +
+                                "company " +
+                                "ON " +
+                                "customer.company = company.company_id " +
+                                "WHERE " +
+                                "customer.customer_id = " +
+                                customerId + ";";
 
-            //SELECT* FROM customer LEFT OUTER JOIN company ON company.company_id = customer.company;
-            string query = "SELECT " +
-                            "* " +
-                            "FROM " +
-                            "`customer` " +
-                            "LEFT OUTER JOIN " +
-                            "company " +
-                            "ON " +
-                            "customer.company = company.company_id " +
-                            "WHERE " +
-                            "customer.customer_id = " +
-                            customerId + ";";
+                Command.CommandText = query;
+                var data = Command.ExecuteReader();
 
-            Command.CommandText = query;
-            var data = Command.ExecuteReader();
+                data.Read();
+                Customer resultCustomer = getValidCustomer(data);
 
-            data.Read();
-            Customer resultCustomer = getValidCustomer(data);
-
-            data.Close();
-            return resultCustomer;
+                data.Close();
+                return resultCustomer;
+            }
+            catch (Exception ex)
+            {
+                MessageBoxHelper.throwErrorMessageBox(
+                    ex.Message + $"\nCould not retrieve customer with id={customerId}",
+                    "Database connection failed");
+                return new Customer();
+            }
         }
 
         public List<Product> getProducts()
         {
-            string query = "SELECT " +
-                            "product.sap_id, product.name, product.category " +
-                            "FROM " +
-                            "product;";
+            try { 
+                string query = "SELECT " +
+                                "product.sap_id, product.name, product.category " +
+                                "FROM " +
+                                "product;";
 
-            Command.CommandText = query;
-            var data = Command.ExecuteReader();
+                Command.CommandText = query;
+                var data = Command.ExecuteReader();
 
-            List<Product> resultProducts = new List<Product>();
-            while (data.Read())
-            {
-                resultProducts.Add(getValidProduct(data));
+                List<Product> resultProducts = new List<Product>();
+                while (data.Read())
+                {
+                    resultProducts.Add(getValidProduct(data));
+                }
+
+                data.Close();
+
+                return resultProducts;
             }
-
-            data.Close();
-
-            return resultProducts;
-
+            catch (Exception ex)
+            {
+                MessageBoxHelper.throwErrorMessageBox(
+                    ex.Message + "\nCould not retrieve list of customer names.",
+                    "Database connection failed");
+                return new List<Product>();
+            }
         }
         public List<Product> getCustomerInterestsById(int customerId)
         {
-            string query = "SELECT " +
-                            "product.sap_id, product.name, product.category " +
-                            "FROM " +
-                            "product_customer " +
-                            "LEFT OUTER JOIN " +
-                            "product " +
-                            "ON " +
-                            "product_customer.sap_number = product.sap_id " +
-                            "WHERE " +
-                            "product_customer.customer_id = " +
-                            customerId + ";";
-
-            Command.CommandText = query;
-            var data = Command.ExecuteReader();
-
-            List<Product> resultProducts = new List<Product>();
-            while (data.Read())
+            try
             {
-                resultProducts.Add(getValidProduct(data));
+                string query = "SELECT " +
+                                "product.sap_id, product.name, product.category " +
+                                "FROM " +
+                                "product_customer " +
+                                "LEFT OUTER JOIN " +
+                                "product " +
+                                "ON " +
+                                "product_customer.sap_number = product.sap_id " +
+                                "WHERE " +
+                                "product_customer.customer_id = " +
+                                customerId + ";";
+
+                Command.CommandText = query;
+                var data = Command.ExecuteReader();
+
+                List<Product> resultProducts = new List<Product>();
+                while (data.Read())
+                {
+                    resultProducts.Add(getValidProduct(data));
+                }
+
+                data.Close();
+
+                return resultProducts;
             }
-
-            data.Close();
-
-            return resultProducts;
+            catch (Exception ex)
+            {
+                MessageBoxHelper.throwErrorMessageBox(
+                    ex.Message + "\nCould not retrieve list of customer names.",
+                    "Database connection failed");
+                return new List<Product>();
+            }
         }
         public List<Customer> getCustomerNameList()
         {
-            string query = "SELECT " +
-                            "customer.customer_Id, customer.first_name, customer.last_name " +
-                            "FROM " +
-                            "customer;";
-
-            Command.CommandText = query;
-            var data = Command.ExecuteReader();
-
-            List<Customer> resultNames = new List<Customer>();
-            while (data.Read())
+            try
             {
-                resultNames.Add(getValidCustomer(data));
+                string query = "SELECT " +
+                                "customer.customer_Id, customer.first_name, customer.last_name " +
+                                "FROM " +
+                                "customer;";
+
+                Command.CommandText = query;
+                var data = Command.ExecuteReader();
+
+                List<Customer> resultNames = new List<Customer>();
+                while (data.Read())
+                {
+                    resultNames.Add(getValidCustomer(data));
+                }
+
+                data.Close();
+
+                return resultNames;
             }
-
-            data.Close();
-
-            return resultNames;
+            catch (Exception ex)
+            {
+                MessageBoxHelper.throwErrorMessageBox(
+                    ex.Message + "\nCould not retrieve list of customer names.",
+                    "Database connection failed");
+                return new List<Customer>();
+            }
         }
 
         public void saveJsonToDatabase(string path)
         {
-            var jsonData = File.ReadAllText(path);
             try
             {
-                List<Customer> newCustomers = JsonConvert.DeserializeObject<List<Customer>>(jsonData);
+                var jsonData = File.ReadAllText(path);
+
+                List<Customer> newCustomers = JsonConvert.DeserializeObject<List<Customer>>(jsonData) ?? throw new Exception();
                 foreach (Customer customer in newCustomers)
                 {
                     saveCustomerToDatabase(customer);
                 }
                 File.Create(path).Close();
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                MessageBoxHelper.throwErrorMessageBox(
+                    ex.Message + "\nCould not save customer to Database!",
+                    "Database connection failed");
             }
         }
-        public bool updateProductJson(string path)
+        public void updateProductJson(string path)
         {
             try
             {
@@ -190,15 +228,14 @@ namespace Juker_Employer.Model
 
                 var resultProductsInJson = JsonConvert.SerializeObject(resultProducts, Formatting.Indented);
                 File.WriteAllText(path, resultProductsInJson);
-
-                return true;
             }
-            catch
+            catch (MySqlException ex)
             {
-                return false;
+                MessageBoxHelper.throwErrorMessageBox(
+                    ex.Message + "\nCould not retrieve products from Database!", 
+                    "Database connection failed");
             }
         }
-
 
         private bool saveProductInterestToDatabase(int productId, int customerId)
         {
@@ -210,7 +247,6 @@ namespace Juker_Employer.Model
             Command.CommandText = query;
             return Command.ExecuteNonQuery() > 0;
         }
-
         private bool saveCustomerToDatabase(Customer customerToSave)
         {
             int? companyId = null;
@@ -257,23 +293,33 @@ namespace Juker_Employer.Model
         }
         private List<Company> getCompanyList()
         {
-            string query = "SELECT " +
-                            "* " +
-                            "FROM " +
-                            "company;";
-
-            Command.CommandText = query;
-            var data = Command.ExecuteReader();
-
-            var resultCompanies = new List<Company>();
-            while (data.Read())
+            try
             {
-                resultCompanies.Add(getValidCompany(data));
+                string query = "SELECT " +
+                                "* " +
+                                "FROM " +
+                                "company;";
+
+                Command.CommandText = query;
+                var data = Command.ExecuteReader();
+
+                var resultCompanies = new List<Company>();
+                while (data.Read())
+                {
+                    resultCompanies.Add(getValidCompany(data));
+                }
+
+                data.Close();
+
+                return resultCompanies;
             }
-
-            data.Close();
-
-            return resultCompanies;
+            catch (Exception ex)
+            {
+                MessageBoxHelper.throwErrorMessageBox(
+                    ex.Message + "\nCould not retrieve products from Database!",
+                    "Database connection failed");
+                return new List<Company>();
+            }
         }
         private int getExistingCompanyId(Company companyToCompare)
         {

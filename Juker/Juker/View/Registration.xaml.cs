@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Markup;
 using Juker.Model;
 using Microsoft.Win32;
@@ -68,15 +69,17 @@ namespace Juker.View
       try
       {
         var jsonDataProduct = File.ReadAllText(pathProduct);
-        productList = JsonConvert.DeserializeObject<List<Product>>(jsonDataProduct);
+        List<Product> productList = JsonConvert.DeserializeObject<List<Product>>(jsonDataProduct);
         ProductListView.ItemsSource = productList;
       }
-      catch
+      catch (Exception ex)
       {
-        throw;
+        MessageBoxHelper.throwErrorMessageBox(
+            ex.Message + "\nNo products in customer.json or wrong path to customer.json.",
+            "Could not retrieve list of product from product.json");
       }
     }
-    #endregion
+    #endregion 
 
     #region HelpMethods
 
@@ -102,25 +105,13 @@ namespace Juker.View
         Company = company,
         ProductInterests = customerInterests
       };
-      StreamReader r = new StreamReader(FilePath);
-      string initialJson = r.ReadToEnd();
-      r.Close();
-      if (initialJson != "")
-      {
-        List<Customer> list = JsonConvert.DeserializeObject<List<Customer>>(initialJson);
-        list.Add(newCustomer);
-        var jsonToOutput = JsonConvert.SerializeObject(list, Formatting.Indented);
-        File.WriteAllText(FilePath, jsonToOutput);
-      }
-      else
-      {
-        List<Customer> list = new List<Customer>();
-        list.Add(newCustomer);
-        string customerList = JsonConvert.SerializeObject(list, Formatting.Indented);
-        File.WriteAllText(FilePath, customerList);
-      }
-
-
+      StreamReader reader = new StreamReader(FilePath);
+      string initialJson = reader.ReadToEnd();
+      reader.Close();
+      var list = initialJson != "" ? JsonConvert.DeserializeObject<List<Customer>>(initialJson) : new List<Customer>();
+      list?.Add(newCustomer);
+      string customerList = JsonConvert.SerializeObject(list, Formatting.Indented);
+      File.WriteAllText(FilePath, customerList);
     }
     private void FinaleFrame_newFrame(object sender, NewFrameEventArgs eventArgs)
     {
@@ -147,7 +138,7 @@ namespace Juker.View
         //catch your error here
       }
     }
-    #endregion 
+    #endregion
 
     #region CheckBoxHandlers
     private void CompanyCheckBoxChecked(object sender, RoutedEventArgs e)
@@ -186,24 +177,9 @@ namespace Juker.View
       }
     }
 
-    #endregion 
+    #endregion
 
     #region ButtonHandlers
-    private void SubmitButtonClick(object sender, RoutedEventArgs e)
-    {
-      try
-      {
-        if (!(File.Exists(pathCustomer)))
-        {
-          File.Create(pathCustomer).Close();
-        }
-        InsertData(pathCustomer);
-      }
-      catch
-      {
-        throw;
-      }
-    }
 
     private void StartCamera(object sender, RoutedEventArgs e)
     {
@@ -216,21 +192,50 @@ namespace Juker.View
     }
     private void SaveImage(object sender, RoutedEventArgs e)
     {
-      videoCaptureDevice.NewFrame -= FinaleFrame_newFrame;
-      Image img = System.Drawing.Image.FromStream(memoryStream);
-      videoCaptureDevice.SignalToStop();
+      try
+      {
+        videoCaptureDevice.NewFrame -= FinaleFrame_newFrame;
+        Image img = System.Drawing.Image.FromStream(memoryStream);
+        videoCaptureDevice.SignalToStop();
 
-      img.Save(downloadDirectory + "\\image.jpeg", ImageFormat.Jpeg);
-      Webcam.Source = new BitmapImage(new Uri(downloadDirectory + "\\image.jpeg"));
-
-      memoryStream.Dispose();
-      img.Dispose();
-      SaveButton.Visibility = Visibility.Collapsed;
+        img.Save(downloadDirectory + "\\image.jpeg", ImageFormat.Jpeg);
+        Webcam.Source = new BitmapImage(new Uri(downloadDirectory + "\\image.jpeg"));
+        img.Dispose();
+        SaveButton.Visibility = Visibility.Collapsed;
+      }
+      catch (Exception ex)
+      { 
+        MessageBoxHelper.throwErrorMessageBox(
+            ex.Message + "\nAn error ccured while capturing your image. Please take one again.",
+            "saving error");
+      }
+      finally
+      {
+        memoryStream.Dispose();
+      }
+    }
+    private void SubmitButtonClick(object sender, RoutedEventArgs e)
+    {
+      try
+      {
+        if (!(File.Exists(pathCustomer)))
+        {
+          File.Create(pathCustomer).Close();
+        }
+        InsertData(pathCustomer);
+      }
+      catch (Exception ex)
+      {
+        MessageBoxHelper.throwErrorMessageBox(
+            ex.Message + "\ngive all mandatory information.",
+            "Invalid input");
+      }
     }
 
-    #endregion 
+    #endregion
 
 
 
   }
 }
+
