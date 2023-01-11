@@ -85,6 +85,7 @@ namespace Juker.View
 
         private void InsertData(string FilePath)
         {
+            string newPath = "";
             Company company = new Company();
             if (isCompanyCustomer)
             {
@@ -94,14 +95,20 @@ namespace Juker.View
                 company.City = CompanyCity.Text;
                 company.Country = CompanyCountry.Text;
             }
-
+            if (FirstName.Text != null || FirstName.Text != "")
+            {
+                FileInfo file = new FileInfo(downloadDirectory + "\\image.jpeg");
+                string pictureFileName = FirstName.Text + DateTime.Now.ToString("M/d/yyyy");
+                newPath = downloadDirectory + $"\\{pictureFileName}.jpeg";
+                file.MoveTo(newPath); // hier könnte noch ein ,true hinter den newPath
+            }
             Customer newCustomer = new Customer()
             {
                 FirstName = FirstName.Text,
                 LastName = LastName.Text,
                 PhoneNumber = PhoneNumber.Text,
                 Email = Email.Text,
-                PictureUrl = "",
+                PictureUrl = newPath,
                 Company = company,
                 ProductInterests = customerInterests
             };
@@ -212,7 +219,6 @@ namespace Juker.View
                 videoCaptureDevice.NewFrame -= FinaleFrame_newFrame;
                 Image img = System.Drawing.Image.FromStream(memoryStream);
                 videoCaptureDevice.SignalToStop();
-
                 img.Save(downloadDirectory + "\\image.jpeg", ImageFormat.Jpeg);
                 Webcam.Source = new BitmapImage(new Uri(downloadDirectory + "\\image.jpeg"));
                 img.Dispose();
