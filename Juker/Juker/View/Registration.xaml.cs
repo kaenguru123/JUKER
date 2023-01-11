@@ -41,6 +41,7 @@ namespace Juker.View
         private List<Product> productList;
         private List<Product> customerInterests;
         private bool isCompanyCustomer;
+        private bool isPictureTaken;
         private BitmapImage bitmapImage;
         private MemoryStream memoryStream;
         private string downloadDirectory = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders", "{374DE290-123F-4565-9164-39C4925E467B}", String.Empty).ToString();
@@ -96,18 +97,13 @@ namespace Juker.View
                 company.City = CompanyCity.Text;
                 company.Country = CompanyCountry.Text;
             }
-            if (isValidData())
+            if (isPictureTaken)
             {
                 FileInfo file = new FileInfo(downloadDirectory + "\\image.jpeg");
                 string pictureFileName = FirstName.Text + DateTime.Now.ToString("M/d/yyyy");
                 newPath = downloadDirectory + $"\\{pictureFileName}.jpeg";
                 file.MoveTo(newPath); // hier könnte noch ein ,true hinter den newPath
             }
-      else
-      {
-        throw new InvalidDataException("Bitten Füllen Sie alle Felder aus");
-      }
-      
             Customer newCustomer = new Customer()
             {
                 FirstName = FirstName.Text,
@@ -146,9 +142,9 @@ namespace Juker.View
             }
             catch (Exception ex)
             {
-                 MessageBoxHelper.throwErrorMessageBox(
-                    ex.Message + "\nSomething went wrong with rendering",
-                    "Rendering error");
+                MessageBoxHelper.throwErrorMessageBox(
+                   ex.Message + "\nSomething went wrong with rendering",
+                   "Rendering error");
             }
         }
         #endregion
@@ -228,6 +224,7 @@ namespace Juker.View
                 img.Save(downloadDirectory + "\\image.jpeg", ImageFormat.Jpeg);
                 img.Save(downloadDirectory + "\\imageTemp.jpeg", ImageFormat.Jpeg);
                 Webcam.Source = new BitmapImage(new Uri(downloadDirectory + "\\imageTemp.jpeg"));
+                isPictureTaken = true;
                 SaveButton.Visibility = Visibility.Collapsed;
             }
             catch (Exception ex)
@@ -248,14 +245,23 @@ namespace Juker.View
                 {
                     File.Create(pathCustomer).Close();
                 }
-                InsertData(pathCustomer);
+                if (isValidData())
+                {
+                    InsertData(pathCustomer);
+                }
+                else
+                {
+                    throw new InvalidDataException("Bitten Füllen Sie alle Felder aus");
+                }
+
+
             }
             catch (Exception ex)
             {
                 MessageBoxHelper.throwErrorMessageBox(
                     ex.Message + "\ngive all mandatory information.",
                     "Invalid input");
-                ((RegistrationViewModel)DataContext).IsSaveable = false; 
+                ((RegistrationViewModel)DataContext).IsSaveable = false;
             }
         }
 
