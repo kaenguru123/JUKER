@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -191,24 +192,18 @@ namespace Juker_Employer.Model
             {
                 var jsonData = File.ReadAllText(path);
 
-                List<Customer> newCustomers = JsonConvert.DeserializeObject<List<Customer>>(jsonData);
+                List<Customer> newCustomers = JsonConvert.DeserializeObject<List<Customer>>(jsonData) ?? throw new Exception();
                 foreach (Customer customer in newCustomers)
                 {
                     saveCustomerToDatabase(customer);
                 }
                 File.Create(path).Close();
             }
-            catch (MySqlException err)
-            {
-                MessageBoxHelper.throwErrorMessageBox(
-                    err.Message + "\nCould not save customer to Database!",
-                    "Database connection failed");
-            }
             catch (Exception ex)
             {
                 MessageBoxHelper.throwErrorMessageBox(
-                    ex.Message + "\nNo customer to save or wrong path to customer.json!",
-                    "Could not find customer.json");
+                    ex.Message + "\nCould not save customer to Database!",
+                    "Database connection failed");
             }
         }
         public void updateProductJson(string path)
@@ -234,10 +229,10 @@ namespace Juker_Employer.Model
                 var resultProductsInJson = JsonConvert.SerializeObject(resultProducts, Formatting.Indented);
                 File.WriteAllText(path, resultProductsInJson);
             }
-            catch (MySqlException err)
+            catch (MySqlException ex)
             {
                 MessageBoxHelper.throwErrorMessageBox(
-                    err.Message + "\nCould not retrieve products from Database!", 
+                    ex.Message + "\nCould not retrieve products from Database!", 
                     "Database connection failed");
             }
         }
