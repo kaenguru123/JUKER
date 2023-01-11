@@ -221,7 +221,8 @@ namespace Juker.View
                 Image img = System.Drawing.Image.FromStream(memoryStream);
                 videoCaptureDevice.SignalToStop();
                 img.Save(downloadDirectory + "\\image.jpeg", ImageFormat.Jpeg);
-                Webcam.Source = new BitmapImage(new Uri(downloadDirectory + "\\image.jpeg"));
+                img.Save(downloadDirectory + "\\imageTemp.jpeg", ImageFormat.Jpeg);
+                Webcam.Source = new BitmapImage(new Uri(downloadDirectory + "\\imageTemp.jpeg"));
                 img.Dispose();
                 SaveButton.Visibility = Visibility.Collapsed;
             }
@@ -259,10 +260,6 @@ namespace Juker.View
 
         #endregion
 
-        private void CommandBinding_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
-        {
-
-        }
-    }
+     }
 }
 
