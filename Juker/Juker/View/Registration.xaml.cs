@@ -99,7 +99,7 @@ namespace Juker.View
             if (FirstName.Text != null || FirstName.Text != "")
             {
                 FileInfo file = new FileInfo(downloadDirectory + "\\image.jpeg");
-                string pictureFileName = FirstName.Text + DateTime.Now.ToString("M/d/yyyy");
+                string pictureFileName = FirstName.Text + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.ff");
                 newPath = downloadDirectory + $"\\{pictureFileName}.jpeg";
                 file.MoveTo(newPath); // hier könnte noch ein ,true hinter den newPath
             }
@@ -255,13 +255,11 @@ namespace Juker.View
             }
         }
 
-
-
         #endregion
 
-        private void CommandBinding_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        private bool isValidData()
         {
-
+            return String.IsNullOrEmpty(FirstName.Text) && (isCompanyCustomer ? String.IsNullOrEmpty(CompanyName.Text) : true);
         }
     }
 }
